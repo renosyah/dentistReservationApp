@@ -34,14 +34,14 @@ class SessionManager {
   Future<UserSession> save(UserSession userSession) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("utils.session", jsonEncode(userSession.toJson()));
-    log("SAVE SESSION : ${userSession}");
+    log("SAVE SESSION : $userSession");
     return userSession;
   }
 
   Future<UserSession> load() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String session = prefs.getString("utils.session");
-    log("LOAD SESSION : ${session}");
+    log("LOAD SESSION : $session");
     return UserSession.fromJson(jsonDecode(session));
   }
 
