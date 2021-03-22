@@ -1,45 +1,45 @@
+import 'package:dentistReservationApp/utils/colors.dart';
+import 'package:dentistReservationApp/utils/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:dentistReservationApp/utils/constantas.dart';
 
 ThemeData theme() {
   return ThemeData(
-    scaffoldBackgroundColor: kBackGround,
+    scaffoldBackgroundColor: kBackground,
     fontFamily: "Poppins",
-    primaryColor: kPrimaryColor,
+    primaryColor: kPrimary,
     appBarTheme: appBarTheme(),
     textTheme: textTheme(),
-    inputDecorationTheme: inputDecorationTheme(),
+    // inputDecorationTheme: inputDecorationTheme(),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 }
 
 InputDecorationTheme inputDecorationTheme() {
-  OutlineInputBorder outlineInputBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8.0),
-    borderSide: BorderSide(color: kSubtitleTextColor),
-    gapPadding: 16,
-  );
   return InputDecorationTheme(
-    floatingLabelBehavior: FloatingLabelBehavior.always,
-    contentPadding: EdgeInsets.symmetric(horizontal: 42, vertical: 20),
-    enabledBorder: outlineInputBorder,
-    focusedBorder: outlineInputBorder,
-    border: outlineInputBorder,
+    filled: true,
+    fillColor: kBackgroundTextField,
+    contentPadding: EdgeInsets.symmetric(
+        horizontal: getProportionateScreenWidth(24.0),
+        vertical: getProportionateScreenWidth(16.0)),
+    border: OutlineInputBorder(
+        borderSide: BorderSide(width: 0.0, style: BorderStyle.none),
+        borderRadius: BorderRadius.circular(getProportionateScreenWidth(8.0))),
   );
 }
 
 TextTheme textTheme() {
   return TextTheme(
-    bodyText1: TextStyle(color: kTitleTextColor),
-    bodyText2: TextStyle(color: kSubtitleTextColor),
+    bodyText1: TextStyle(color: kText1),
+    bodyText2: TextStyle(color: kText2),
   );
 }
 
 AppBarTheme appBarTheme() {
   return AppBarTheme(
-    color: kBackGround,
+    color: kBackground,
     elevation: 0,
+    centerTitle: true,
     brightness: Brightness.light,
-    iconTheme: IconThemeData(color: kSubtitleTextColor),
+    iconTheme: IconThemeData(color: kPrimary),
   );
 }
