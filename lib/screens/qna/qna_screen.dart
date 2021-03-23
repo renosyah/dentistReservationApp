@@ -67,8 +67,13 @@ class _QnaScreenState extends State<QnaScreen> {
                   ),
                 ),
               );
+            } else if (snapshot.hasData && snapshot.data.docs.isEmpty){
+              return EmptyQna();
             }
-            return EmptyQna();
+
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
       ),
     );

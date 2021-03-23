@@ -152,8 +152,13 @@ class _ReservasiScreenState  extends State<ReservasiScreen> {
                     ),
                   ),
                 );
+            } else if (snapshot.hasData && snapshot.data.docs.isEmpty){
+              return EmptyReservasi();
             }
-            return EmptyReservasi();
+
+            return Center(
+              child: CircularProgressIndicator(),
+            );
          }
       ),
     );
