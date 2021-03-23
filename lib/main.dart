@@ -1,7 +1,7 @@
+import 'package:dentistReservationApp/routing/constanta.dart';
+import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:dentistReservationApp/routing/constanta_routing.dart';
-import 'package:dentistReservationApp/utils/constantas.dart';
 import 'package:dentistReservationApp/utils/theme.dart';
 import 'package:dentistReservationApp/routing/routes.dart' as route;
 
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
-        statusBarColor: kBackGround));
+        statusBarColor: kBackground));
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Reservasi Dentist',
