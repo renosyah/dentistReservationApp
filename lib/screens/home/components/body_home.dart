@@ -4,7 +4,7 @@ import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
 import 'package:dentistReservationApp/utils/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' as carousel;
 
 class BodyHome extends StatefulWidget {
   final ValueChanged<int> onTap;
@@ -21,7 +21,7 @@ class _BodyHomeState extends State<BodyHome> {
 
   _BodyHomeState({this.onTap});
 
-  CarouselController _carouselController = CarouselController();
+  carousel.CarouselController _carouselController = carousel.CarouselController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _BodyHomeState extends State<BodyHome> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CarouselSlider(
+          carousel.CarouselSlider(
             items: tipsAndTricks.map((data) {
               return GestureDetector(
                 onTap: () => Navigator.push(
@@ -91,7 +91,7 @@ class _BodyHomeState extends State<BodyHome> {
                 ),
               );
             }).toList(),
-            options: CarouselOptions(
+            options: carousel.CarouselOptions(
                 autoPlayAnimationDuration: Duration(seconds: 1),
                 autoPlayInterval: Duration(seconds: 2),
                 height: getProportionateScreenWidth(180.0),

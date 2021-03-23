@@ -3,8 +3,29 @@ import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
 import 'package:dentistReservationApp/utils/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+
+  User user;
+  Future<void> getUserData() async {
+    User userData = FirebaseAuth.instance.currentUser;
+    setState(() {
+      user = userData;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -36,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                 height: getProportionateScreenHeight(36.0),
               ),
               Text(
-                "Suparmin",
+                "${user.displayName}",
                 style: TextStyle(
                     color: kText1, fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
@@ -44,7 +65,7 @@ class ProfileScreen extends StatelessWidget {
                 height: getProportionateScreenHeight(8.0),
               ),
               Text(
-                "reservasi@gmail.com",
+                "${user.email}",
                 style: TextStyle(color: kText2, fontSize: 18.0),
               ),
               SizedBox(
@@ -146,8 +167,14 @@ class ProfileScreen extends StatelessWidget {
                       width: double.infinity,
                       height: getProportionateScreenHeight(72.0)),
                   child: ElevatedButton(
-                    onPressed: () =>
-                        Navigator.pushReplacementNamed(context, login),
+                    onPressed: ()  {
+
+                        WidgetsBinding.instance.addPostFrameCallback((_) async {
+                          await FirebaseAuth.instance.signOut();
+                          Navigator.pushReplacementNamed(context, login);
+                      });
+
+                    },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(kPrimary),
                         elevation: MaterialStateProperty.all(0)),
