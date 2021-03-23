@@ -2,9 +2,9 @@ import 'package:dentistReservationApp/models/data_tips_and_tricks.dart';
 import 'package:dentistReservationApp/screens/detail/detail_tips_screen.dart';
 import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
-import 'package:dentistReservationApp/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart' as carousel;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BodyHome extends StatefulWidget {
   final ValueChanged<int> onTap;
@@ -25,11 +25,12 @@ class _BodyHomeState extends State<BodyHome> {
 
   @override
   Widget build(BuildContext context) {
+    List<TipsAndTrick> _tipsAndTrick = new TipsAndTrick().getListTrickAndTips(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
-          navBarTextHome,
+          AppLocalizations.of(context).navBarTextHome,
           style: TextStyle(
               color: kPrimary, fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
@@ -38,7 +39,7 @@ class _BodyHomeState extends State<BodyHome> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           carousel.CarouselSlider(
-            items: tipsAndTricks.map((data) {
+            items: new TipsAndTrick().getListTrickAndTips(context).map((data) {
               return GestureDetector(
                 onTap: () => Navigator.push(
                     context,
@@ -113,8 +114,8 @@ class _BodyHomeState extends State<BodyHome> {
                 horizontal: getProportionateScreenWidth(24.0)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: tipsAndTricks.map((data) {
-                int index = tipsAndTricks.lastIndexOf(data);
+              children: _tipsAndTrick .map((data) {
+                int index = _tipsAndTrick.lastIndexOf(data);
                 return AnimatedContainer(
                   duration: Duration(milliseconds: 400),
                   margin: EdgeInsets.symmetric(
@@ -138,7 +139,7 @@ class _BodyHomeState extends State<BodyHome> {
             padding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(24.0)),
             child: Text(
-              features,
+              AppLocalizations.of(context).features,
               style: TextStyle(
                   color: kText1, fontSize: 14.0, fontWeight: FontWeight.bold),
             ),
@@ -176,14 +177,14 @@ class _BodyHomeState extends State<BodyHome> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            navBarTextReservasi,
+                            AppLocalizations.of(context).navBarTextReservasi,
                             style: TextStyle(color: kText1, fontSize: 20.0),
                           ),
                           SizedBox(
                             height: getProportionateScreenHeight(4.0),
                           ),
                           Text(
-                            subtitleReservasi,
+                            AppLocalizations.of(context).subtitleReservasi,
                             style: TextStyle(color: kText2, fontSize: 14.0),
                           )
                         ],
@@ -232,7 +233,7 @@ class _BodyHomeState extends State<BodyHome> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                asking,
+                                AppLocalizations.of(context).asking,
                                 style: TextStyle(
                                     color: kText1,
                                     fontSize: 18.0,
@@ -245,7 +246,7 @@ class _BodyHomeState extends State<BodyHome> {
                                   child: TextFormField(
                                 keyboardType: TextInputType.name,
                                 decoration: InputDecoration(
-                                  hintText: askingHint,
+                                  hintText: AppLocalizations.of(context).askingHint,
                                   filled: true,
                                   fillColor: kBackgroundTextField,
                                   contentPadding: EdgeInsets.symmetric(
@@ -277,7 +278,7 @@ class _BodyHomeState extends State<BodyHome> {
                                           MaterialStateProperty.all(kPrimary),
                                       elevation: MaterialStateProperty.all(0)),
                                   child: Text(
-                                    btnSend,
+                                    AppLocalizations.of(context).btnSend,
                                     style: TextStyle(
                                       color: kWhite,
                                       fontSize: 22.0,
@@ -317,14 +318,14 @@ class _BodyHomeState extends State<BodyHome> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            navBarTextQna,
+                            AppLocalizations.of(context).navBarTextQna,
                             style: TextStyle(color: kText1, fontSize: 20.0),
                           ),
                           SizedBox(
                             height: getProportionateScreenHeight(4.0),
                           ),
                           Text(
-                            subtitleQna,
+                            AppLocalizations.of(context).subtitleQna,
                             style: TextStyle(color: kText2, fontSize: 14.0),
                           )
                         ],

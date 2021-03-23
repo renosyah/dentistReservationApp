@@ -1,6 +1,6 @@
 import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
-import 'package:dentistReservationApp/utils/strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -25,7 +25,7 @@ class _QnaScreenState extends State<QnaScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          navBarTextQna,
+          AppLocalizations.of(context).navBarTextQna,
           style: TextStyle(
               color: kPrimary, fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
@@ -82,7 +82,7 @@ class BuildQnaItem extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(ask,
+                        Text(AppLocalizations.of(context).ask,
                             style: TextStyle(fontSize: 14.0, color: kText2)),
                         SizedBox(height: getProportionateScreenWidth(8.0)),
                         Text(
@@ -95,7 +95,7 @@ class BuildQnaItem extends StatelessWidget {
                         SizedBox(
                           height: getProportionateScreenHeight(24.0),
                         ),
-                        Text(textAnswer,
+                        Text(AppLocalizations.of(context).textAnswer,
                             style: TextStyle(fontSize: 14.0, color: kText2)),
                         SizedBox(height: getProportionateScreenWidth(8.0)),
                         Text(
@@ -146,11 +146,11 @@ class BuildQnaItem extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   text: TextSpan(
-                      text: answer,
+                      text: AppLocalizations.of(context).answer,
                       style: TextStyle(color: kPrimary, fontSize: 14.0),
                       children: [
                         TextSpan(
-                            text: pending,
+                            text: AppLocalizations.of(context).pending,
                             style: TextStyle(color: kPending, fontSize: 14.0))
                       ]))
             ],
@@ -183,7 +183,7 @@ class EmptyQna extends StatelessWidget {
         ),
         Center(
             child: Text(
-          emptyQnaTitle,
+              AppLocalizations.of(context).emptyQnaTitle,
           style: TextStyle(
               color: kText1, fontWeight: FontWeight.bold, fontSize: 18.0),
         )),
@@ -197,11 +197,11 @@ class EmptyQna extends StatelessWidget {
             child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                    text: emptyQnaSubtitle,
+                    text: AppLocalizations.of(context).emptyQnaSubtitle,
                     style: TextStyle(fontSize: 16.0, color: kText2),
                     children: [
                       TextSpan(
-                          text: navBarTextHome,
+                          text: AppLocalizations.of(context).navBarTextHome,
                           style: TextStyle(
                               fontSize: 16.0,
                               color: kPrimary,

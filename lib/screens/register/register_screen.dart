@@ -1,7 +1,7 @@
 import 'package:dentistReservationApp/routing/constanta.dart';
 import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
-import 'package:dentistReservationApp/utils/strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -95,7 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           controller: _controllerName,
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
-                            hintText: nameHint,
+                            hintText: AppLocalizations.of(context).nameHint,
                             filled: true,
                             fillColor: kBackgroundTextField,
                             contentPadding: EdgeInsets.symmetric(
@@ -119,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           controller: _controllerEmail,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
-                            hintText: emailHint,
+                            hintText: AppLocalizations.of(context).emailHint,
                             filled: true,
                             fillColor: kBackgroundTextField,
                             contentPadding: EdgeInsets.symmetric(
@@ -143,7 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           controller: _controllerPassword,
                           obscureText: true,
                           decoration: InputDecoration(
-                            hintText: passwordHint,
+                            hintText: AppLocalizations.of(context).passwordHint,
                             filled: true,
                             fillColor: kBackgroundTextField,
                             contentPadding: EdgeInsets.symmetric(
@@ -175,7 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         backgroundColor: MaterialStateProperty.all(kPrimary),
                         elevation: MaterialStateProperty.all(0)),
                     child: Text(
-                      btnRegister,
+                      AppLocalizations.of(context).btnRegister,
                       style: TextStyle(
                         color: kWhite,
                         fontSize: 22.0,
@@ -190,11 +190,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               RichText(
                   text: TextSpan(
-                      text: alreadyHaveAnAccount,
+                      text: AppLocalizations.of(context).alreadyHaveAnAccount,
                       style: TextStyle(color: kText2, fontSize: 16.0),
                       children: [
                         TextSpan(
-                            text: loginText,
+                            text: AppLocalizations.of(context).loginText,
                             style: TextStyle(
                                 fontSize: 16.0,
                                 color: kPrimary,

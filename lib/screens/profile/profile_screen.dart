@@ -1,7 +1,7 @@
 import 'package:dentistReservationApp/routing/constanta.dart';
 import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
-import 'package:dentistReservationApp/utils/strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -32,7 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            navBarTextProfile,
+            AppLocalizations.of(context).navBarTextProfile,
             style: TextStyle(
                 color: kPrimary, fontSize: 18.0, fontWeight: FontWeight.bold),
           ),
@@ -94,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          aboutApp,
+                          AppLocalizations.of(context).aboutApp,
                           style: TextStyle(
                               color: kText1,
                               fontSize: 18.0,
@@ -104,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: getProportionateScreenWidth(8.0),
                         ),
                         Text(
-                          aboutAppDesc,
+                          AppLocalizations.of(context).aboutAppDesc,
                           style: TextStyle(color: kText2, fontSize: 14.0),
                         )
                       ],
@@ -138,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          helpApp,
+                          AppLocalizations.of(context).helpApp,
                           style: TextStyle(
                               color: kText1,
                               fontSize: 18.0,
@@ -148,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: getProportionateScreenWidth(8.0),
                         ),
                         Text(
-                          helpAppDesc,
+                          AppLocalizations.of(context).helpAppDesc,
                           style: TextStyle(color: kText2, fontSize: 14.0),
                         )
                       ],
@@ -179,7 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         backgroundColor: MaterialStateProperty.all(kPrimary),
                         elevation: MaterialStateProperty.all(0)),
                     child: Text(
-                      btnLogout,
+                      AppLocalizations.of(context).btnLogout,
                       style: TextStyle(
                         color: kWhite,
                         fontSize: 22.0,

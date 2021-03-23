@@ -1,10 +1,10 @@
 import 'package:dentistReservationApp/routing/constanta.dart';
 import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
-import 'package:dentistReservationApp/utils/strings.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           controller: _controllerEmail,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
-                            hintText: emailHint,
+                            hintText: AppLocalizations.of(context).emailHint,
                             filled: true,
                             fillColor: kBackgroundTextField,
                             contentPadding: EdgeInsets.symmetric(
@@ -116,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           controller: _controllerPassword,
                           obscureText: true,
                           decoration: InputDecoration(
-                            hintText: passwordHint,
+                            hintText: AppLocalizations.of(context).passwordHint,
                             filled: true,
                             fillColor: kBackgroundTextField,
                             contentPadding: EdgeInsets.symmetric(
@@ -148,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         backgroundColor: MaterialStateProperty.all(kPrimary),
                         elevation: MaterialStateProperty.all(0)),
                     child: Text(
-                      btnLogin,
+                      AppLocalizations.of(context).btnLogin,
                       style: TextStyle(
                         color: kWhite,
                         fontSize: 22.0,
@@ -163,11 +163,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               RichText(
                   text: TextSpan(
-                      text: dontHaveAnAccountYet,
+                      text: AppLocalizations.of(context).dontHaveAnAccountYet,
                       style: TextStyle(color: kText2, fontSize: 16.0),
                       children: [
                         TextSpan(
-                            text: registerText,
+                            text: AppLocalizations.of(context).registerText,
                             style: TextStyle(
                                 fontSize: 16.0,
                                 color: kPrimary,

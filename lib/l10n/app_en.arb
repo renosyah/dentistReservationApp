@@ -1,0 +1,282 @@
+{
+    "app_name": "Dentist Reservation",
+    "@app_name": {
+        "description": "app name"
+    },
+    "nameHint" :  "Name",
+    "@nameHint": {
+        "description": ""
+    },
+    "emailHint" :  "Email",
+    "@emailHint": {
+        "description": ""
+    },
+    "passwordHint" :  "Password",
+    "@passwordHint": {
+        "description": ""
+    },
+    "time" :  "Time",
+    "@time": {
+        "description": ""
+    },
+    "queueNumber" :  "Queue Number",
+    "@queueNumber": {
+        "description": ""
+    },
+    "askingHint" :  "Enter your question",
+    "@askingHint": {
+        "description": ""
+    },
+    "btnLogin" :  "Login",
+    "@btnLogin": {
+        "description": ""
+    },
+    "btnLogout" :  "Logout",
+    "@btnLogout": {
+        "description": ""
+    },
+    "btnRegister" :  "Register",
+    "@btnRegister": {
+        "description": ""
+    },
+    "btnSend" :  "Send",
+    "@btnSend": {
+        "description": ""
+    },
+    "dontHaveAnAccountYet" :  "Don't have an account yet ? ",
+    "@dontHaveAnAccountYet": {
+        "description": ""
+    },
+    "alreadyHaveAnAccount" :  "Already have an account ? ",
+    "@alreadyHaveAnAccount": {
+        "description": ""
+    },
+    "registerText" :  "Register!",
+    "@registerText": {
+        "description": ""
+    },
+    "loginText" :  "Sign In!",
+    "@loginText": {
+        "description": ""
+    },
+    "developer" :  "Fransisco S B Thorison",
+    "@developer": {
+        "description": ""
+    },
+    "nim" :  "\n155410123",
+    "@nim": {
+        "description": ""
+    },
+    "features" :  "Features",
+    "@features": {
+        "description": ""
+    },
+    "navBarTextHome" :  "Home",
+    "@navBarTextHome": {
+        "description": ""
+    },
+    "navBarTextQna" :  "QnA",
+    "@navBarTextQna": {
+        "description": ""
+    },
+    "navBarTextReservasi" :  "Reservation",
+    "@navBarTextReservasi": {
+        "description": ""
+    },
+    "navBarTextProfile" :  "Profile",
+    "@navBarTextProfile": {
+        "description": ""
+    },
+    "emptyReservasiTitle" :  "Empty Reservation",
+    "@emptyReservasiTitle": {
+        "description": ""
+    },
+    "emptyReservasiSubtitle" :
+    "You haven't made a reservation. Make a reservation to do a dental check on that page",
+    "@emptyReservasiSubtitle": {
+        "description": ""
+    },
+    "emptyQnaTitle" :  "Empty QnA",
+    "@emptyQnaTitle": {
+        "description": ""
+    },
+    "emptyQnaSubtitle" :
+    "Ask your questions about the health of your teeth on the page",
+    "@emptyQnaSubtitle": {
+        "description": ""
+    },
+    "answer" :  "Answer : ",
+    "@answer": {
+        "description": ""
+    },
+    "ask" :  "Question",
+    "@ask": {
+        "description": ""
+    },
+    "textAnswer" :  "Answer",
+    "@textAnswer": {
+        "description": ""
+    },
+    "note" :  "Note : Come 30 minutes before the scheduled \n schedule",
+    "@note": {
+        "description": ""
+    },
+    "subtitleReservasi" :  "Make a reservation to the doctor",
+    "@subtitleReservasi": {
+        "description": ""
+    },
+    "subtitleQna" :  "Ask questions about dental health",
+    "@subtitleQna": {
+        "description": ""
+    },
+    "tips1" :  "Tips & Tricks for Taking Care of Teeth Part 1",
+    "@tips1": {
+        "description": ""
+    },
+    "tips2" :  "Tips & Tricks for Taking Care of Teeth Part 2",
+    "@tips2": {
+        "description": ""
+    },
+    "tips3" :  "Tips & Tricks for Taking Care of Teeth Part 3",
+    "@tips3": {
+        "description": ""
+    },
+    "pending" :  "Waiting...",
+    "@pending": {
+        "description": ""
+    },
+    "asking" :  "Ask Your Questions",
+    "@asking": {
+        "description": ""
+    },
+    "tipsTitle" :  "Tips & Tricks",
+    "@tipsTitle": {
+        "description": ""
+    },
+    "subtitle1" :  "1. Brushing your teeth properly",
+    "@subtitle1": {
+        "description": ""
+    },
+    "subtitle2" :  "2. Choose the appropriate toothbrush",
+    "@subtitle2": {
+        "description": ""
+    },
+    "subtitle3" :  "3. Use toothpaste that contains fluoride",
+    "@subtitle3": {
+        "description": ""
+    },
+    "subtitle4" :  "4. Clean the tongue",
+    "@subtitle4": {
+        "description": ""
+    },
+    "subtitle5" :  "5. Do flossing",
+    "@subtitle5": {
+        "description": ""
+    },
+    "subtitle6" :  "6. Don't forget to brush your teeth before bed",
+    "@subtitle6": {
+        "description": ""
+    },
+    "subtitle7" :  "7. Using mouthwash",
+    "@subtitle7": {
+        "description": ""
+    },
+    "subtitle8" :  "8. Eat vegetables and fruit",
+    "@subtitle8": {
+        "description": ""
+    },
+    "subtitle9" :  "9. Drink water",
+    "@subtitle9": {
+        "description": ""
+    },
+    "subtitle10" :  "10. Cut down on sweet and sour foods",
+    "@subtitle10": {
+        "description": ""
+    },
+    "subtitle11" :  "11. Avoid smoking",
+    "@subtitle11": {
+        "description": ""
+    },
+    "subtitle12" :  "12. Check your teeth regularly",
+    "@subtitle12": {
+        "description": ""
+    },
+    "desc1" :
+    "Always brush your teeth at least twice a day and make sure you are brushing your teeth properly. Don't be too hasty in cleaning your teeth, brush your teeth slowly and in a circular pattern to remove plaque on your teeth.",
+    "@desc1": {
+        "description": ""
+    },
+    "desc2" :
+    "Another factor that needs to be considered when maintaining oral health is the selection of a toothbrush. Choose a toothbrush with a soft brush and replace the toothbrush if there are bent bristles. Curly or dull hair can damage teeth.",
+    "@desc2": {
+        "description": ""
+    },
+    "desc3" :
+    "In addition to toothbrushes, you also have to choose the correct toothpaste content. Experts suggest using toothpaste that contains fluoride which can protect teeth from decay by killing bacteria and protecting teeth.",
+    "@desc3": {
+        "description": ""
+    },
+
+    "desc4" :
+    "The tongue is a part of the mouth that is often neglected when maintaining oral health, even though plaque can also accumulate on the tongue! The buildup of plaque on the tongue can cause bad odors and other health problems. Therefore, always clean your tongue slowly every time you brush your teeth.",
+    "@desc4": {
+        "description": ""
+    },
+
+    "desc5" :
+    "Not many people realize the importance of flossing or flossing in maintaining oral health. Flossing not only aims to remove food debris stuck to the teeth, but also to reduce plaque and inflammation on the teeth. It's best to do flossing once a day.",
+    "@desc5": {
+        "description": ""
+    },
+    "desc6" :
+    "When you're tired and sleepy, it's easy to forget the little things like brushing your teeth. However, you still need to brush your teeth before going to bed to maintain healthy teeth and mouth by removing dental plaque and bacteria that are in your mouth throughout the day.",
+    "@desc6": {
+        "description": ""
+    },
+    "desc7" :
+    "Although it is not mandatory to use mouthwash, mouthwash can help reduce acidity in the mouth, provide minerals to the teeth, and help clean gums and teeth that are difficult to brush.",
+    "@desc7": {
+        "description": ""
+    },
+    "desc8" :
+    "Eating fresh and crunchy vegetables can stimulate teeth and gums, and keep teeth and mouth healthy. This is important to implement, especially for children.",
+    "@desc8": {
+        "description": ""
+    },
+    "desc9" :
+    "Drinking water not only prevents you from dehydration, but is also beneficial for maintaining healthy teeth and mouth by cleaning acidic and sticky food residue from the mouth. We recommend that you drink water after eating.",
+    "@desc9": {
+        "description": ""
+    },
+    "desc10" :
+    "Foods that contain acids and sugar can interfere with oral health. Sugar can become acid in the teeth which can erode the surface layer of the teeth and create holes in the teeth.",
+    "@desc10": {
+        "description": ""
+    },
+    "desc11" :
+    "Not only has the potential to cause oral cancer, the nicotine and tar content in cigarettes can give teeth a yellow color, increase the buildup of dental plaque, and damage the gums and bones that support teeth.",
+    "@desc11": {
+        "description": ""
+    },
+    "desc12" :
+    "Another thing that is often overlooked in maintaining healthy teeth and mouth is to schedule regular check-ups to the dentist at least twice a year. According to experts, checking with a dentist is useful for checking the condition of the teeth and cleaning accumulated tartar.",
+    "@desc12": {
+        "description": ""
+    },
+    "aboutApp" :  "About App",
+    "@aboutApp": {
+        "description": ""
+    },
+    "aboutAppDesc" :  "Know about this application",
+    "@aboutAppDesc": {
+        "description": ""
+    },
+    "helpApp" :  "Help",
+    "@helpApp": {
+        "description": ""
+    },
+    "helpAppDesc" :  "Procedure for using this application",
+    "@helpAppDesc": {
+        "description": ""
+    }
+}

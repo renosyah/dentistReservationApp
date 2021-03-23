@@ -1,5 +1,5 @@
-
-import 'package:dentistReservationApp/utils/strings.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TipsAndTrick {
   final String title;
@@ -7,37 +7,40 @@ class TipsAndTrick {
   final List<DetailTipsAndTrick> tipsAndTrikList;
 
   TipsAndTrick({this.title, this.image, this.tipsAndTrikList});
+
+  List<TipsAndTrick> getListTrickAndTips(BuildContext context) {
+    return [
+      TipsAndTrick(
+          title: AppLocalizations.of(context).tips1,
+          image: "assets/images/image1.jpg",
+          tipsAndTrikList: [
+            DetailTipsAndTrick(subtitle: AppLocalizations.of(context).subtitle1, description: AppLocalizations.of(context).desc1),
+            DetailTipsAndTrick(subtitle: AppLocalizations.of(context).subtitle2, description: AppLocalizations.of(context).desc2),
+            DetailTipsAndTrick(subtitle: AppLocalizations.of(context).subtitle3, description: AppLocalizations.of(context).desc3),
+            DetailTipsAndTrick(subtitle: AppLocalizations.of(context).subtitle4, description: AppLocalizations.of(context).desc4),
+          ]),
+      TipsAndTrick(
+          title: AppLocalizations.of(context).tips2,
+          image: "assets/images/image2.jpg",
+          tipsAndTrikList:[
+            DetailTipsAndTrick(subtitle: AppLocalizations.of(context).subtitle5, description: AppLocalizations.of(context).desc5),
+            DetailTipsAndTrick(subtitle: AppLocalizations.of(context).subtitle6, description: AppLocalizations.of(context).desc6),
+            DetailTipsAndTrick(subtitle: AppLocalizations.of(context).subtitle7, description: AppLocalizations.of(context).desc7),
+            DetailTipsAndTrick(subtitle: AppLocalizations.of(context).subtitle8, description: AppLocalizations.of(context).desc8),
+          ]),
+      TipsAndTrick(
+          title: AppLocalizations.of(context).tips3,
+          image: "assets/images/image3.jpg",
+          tipsAndTrikList: [
+            DetailTipsAndTrick(subtitle: AppLocalizations.of(context).subtitle9, description: AppLocalizations.of(context).desc9),
+            DetailTipsAndTrick(subtitle: AppLocalizations.of(context).subtitle10, description: AppLocalizations.of(context).desc10),
+            DetailTipsAndTrick(subtitle: AppLocalizations.of(context).subtitle11, description: AppLocalizations.of(context).desc11),
+            DetailTipsAndTrick(subtitle: AppLocalizations.of(context).subtitle12, description: AppLocalizations.of(context).desc12),
+          ]),
+    ];
+  }
 }
 
-List<TipsAndTrick> tipsAndTricks = [
-  TipsAndTrick(
-      title: tips1,
-      image: "assets/images/image1.jpg",
-      tipsAndTrikList: [
-        DetailTipsAndTrick(subtitle: subtitle1, description: desc1),
-        DetailTipsAndTrick(subtitle: subtitle2, description: desc2),
-        DetailTipsAndTrick(subtitle: subtitle3, description: desc3),
-        DetailTipsAndTrick(subtitle: subtitle4, description: desc4),
-      ]),
-  TipsAndTrick(
-      title: tips2,
-      image: "assets/images/image2.jpg",
-      tipsAndTrikList: [
-        DetailTipsAndTrick(subtitle: subtitle5, description: desc5),
-        DetailTipsAndTrick(subtitle: subtitle6, description: desc6),
-        DetailTipsAndTrick(subtitle: subtitle7, description: desc7),
-        DetailTipsAndTrick(subtitle: subtitle8, description: desc8),
-      ]),
-  TipsAndTrick(
-      title: tips3,
-      image: "assets/images/image3.jpg",
-      tipsAndTrikList: [
-        DetailTipsAndTrick(subtitle: subtitle9, description: desc9),
-        DetailTipsAndTrick(subtitle: subtitle10, description: desc10),
-        DetailTipsAndTrick(subtitle: subtitle11, description: desc11),
-        DetailTipsAndTrick(subtitle: subtitle12, description: desc12),
-      ]),
-];
 
 class DetailTipsAndTrick {
   final String subtitle;

@@ -1,7 +1,7 @@
 import 'package:dentistReservationApp/models/data_tips_and_tricks.dart';
 import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
-import 'package:dentistReservationApp/utils/strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class DetailTipsScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class DetailTipsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          tipsTitle,
+          AppLocalizations.of(context).tipsTitle,
           style: TextStyle(
               color: kPrimary, fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
@@ -98,7 +98,7 @@ class DetailTipsScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "$developer $nim \nby Kementrian Kesehatan Republik Indonesia",
+                  "${AppLocalizations.of(context).developer} ${AppLocalizations.of(context).nim} \nby Kementrian Kesehatan Republik Indonesia",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: kText2,

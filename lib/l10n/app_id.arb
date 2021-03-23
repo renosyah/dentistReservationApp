@@ -1,0 +1,82 @@
+{
+    "app_name": "Reservasi Dokter Gigi",
+    "nameHint" :  "Nama",
+    "emailHint" :  "Email",
+    "passwordHint" :  "Password",
+    "time" :  "Waktu",
+    "queueNumber" :  "Nomor Antrian",
+    "askingHint" :  "Masukan pertanyaan Mu",
+    "btnLogin" :  "Masuk",
+    "btnLogout" :  "Keluar",
+    "btnRegister" :  "Daftar",
+    "btnSend" :  "Kirim",
+    "dontHaveAnAccountYet" :  "Belum punya akun ? ",
+    "alreadyHaveAnAccount" :  "Sudah punya akun ? ",
+    "registerText" :  "Yuk Daftar!",
+    "loginText" :  "Silahkan Masuk!",
+    "developer" :  "Fransisco S B Thorison",
+    "nim" :  "\n155410123",
+    "features" :  "Fitur",
+    "navBarTextHome" :  "Beranda",
+    "navBarTextQna" :  "Tanya Jawab",
+    "navBarTextReservasi" :  "Reservasi",
+    "navBarTextProfile" :  "Profile",
+    "emptyReservasiTitle" :  "Reservasi Kosong",
+    "emptyReservasiSubtitle" :
+    "Anda belum melakukan reservasi. Buat reservasi untuk melakukan pemeriksaan gigi pada halaman ",
+    "emptyQnaTitle" :  "Tanya Jawab Kosong",
+    "emptyQnaSubtitle" :
+    "Ajukan pertanyaan Anda terkait kesehatan gigi Anda pada halaman ",
+    "answer" :  "Jawaban : ",
+    "ask" :  "Pertanyaan",
+    "textAnswer" :  "Jawaban",
+    "note" :  "Note : Datanglah 30 menit sebelum jadwal yang\ntelah ditentukan",
+    "subtitleReservasi" :  "Buat reservasi untuk periksa ke dokter",
+    "subtitleQna" :  "Ajukan pertanyaan seputar kesehatan gigi",
+    "tips1" :  "Tips & Trik Merawat Gigi Part 1",
+    "tips2" :  "Tips & Trik Merawat Gigi Part 2",
+    "tips3" :  "Tips & Trik Merawat Gigi Part 3",
+    "pending" :  "Menunggu...",
+    "asking" :  "Ajukan Pertanyaan Mu",
+    "tipsTitle" :  "Tips & Trik",
+    "subtitle1" :  "1. Menyikat gigi dengan benar",
+    "subtitle2" :  "2. Pilih sikat gigi yang sesuai",
+    "subtitle3" :  "3. Gunakan pasta gigi yang mengandung fluoride",
+    "subtitle4" :  "4. Bersihkan bagian lidah",
+    "subtitle5" :  "5. Lakukan flossing",
+    "subtitle6" :  "6. Jangan lupa menggosok gigi sebelum tidur",
+    "subtitle7" :  "7. Menggunakan obat kumur",
+    "subtitle8" :  "8. Konsumsi sayur dan buah",
+    "subtitle9" :  "9. Minum air putih",
+    "subtitle10" :  "10. Kurangi makanan yang asam dan bergula",
+    "subtitle11" :  "11. Hindari merokok",
+    "subtitle12" :  "12. Periksa gigi secara rutin",
+    "desc1" :
+    "Selalu sikat gigi setidaknya dua kali sehari dan pastikan Anda menyikat gigi dengan benar. Jangan terlalu terburu-buru dalam membersihkan gigi, sikat gigi secara perlahan dan dengan pola melingkar untuk menghilangkan plak di gigi.",
+    "desc2" :
+    "Faktor lain yang perlu diperhatikan saat menjaga kesehatan gigi dan mulut adalah pemilihan sikat gigi. Pilihlah sikat gigi dengan sikat yang lembut dan ganti sikat gigi jika terdapat bulu sikat yang bengkok. Bulu sikat yang bengkok atau tumpul dapat merusak gigi.",
+    "desc3" :
+    "Selain sikat gigi, Anda juga harus memilih kandungan pasta gigi yang benar. Ahli menyarankan untuk menggunakan pasta gigi yang mengandung fluoride yang mampu melindungi gigi dari kerusakan dengan membasmi bakteri dan melindungi gigi.",
+    "desc4" :
+    "Lidah merupakan salah satu bagian dalam mulut yang sering tidak diperhatikan saat merawat kesehatan gigi dan mulut.Padahal, plak juga bisa menumpuk di lidah Anda! Penumpukan plak di lidah dapat menyebabkan bau tidak sedap dan masalah kesehatan lainnya. Oleh karenanya, selalu bersihkan bagian lidah dengan perlahan setiap kali Anda menyikat gigi.",
+    "desc5" :
+    "Tidak banyak orang yang menyadari pentingnya melakukan flossing atau pembersihan dengan benang gigi dalam menjaga kesehatan gigi dan mulut.Flossing tidak hanya bertujuan untuk mengeluarkan sisa makanan yang tersangkut di gigi, tetapi juga untuk mengurangi plak dan peradangan di gigi. Sebaiknya lakukan flossing sebanyak sehari sekali.",
+    "desc6" :
+    "Saat sedang lelah dan ngantuk, mudah untuk melupakan hal kecil seperti menyikat gigi. Namun, Anda tetap perlu menyikat gigi sebelum tidur untuk menjaga kesehatan gigi dan mulut dengan  menghilangkan plak gigi dan bakteri yang ada dalam mulut seharian.",
+    "desc7" :
+    "Meskipun Anda tidak wajib menggunakan obat kumur, tetapi obat kumur dapat membantu mengurangi keasaman di mulut, memberikan mineral pada gigi, serta membantu membersihkan gusi dan bagian gigi yang sulit disikat.",
+    "desc8" :
+    "Mengonsumsi sayuran yang segar dan renyah dapat menstimulasi gigi dan gusi, serta menjaga kesehatan gigi dan mulut. Hal ini penting untuk diterapkan, khususnya untuk anak-anak.",
+    "desc9" :
+    "Meminum air tidak hanya menghindarkan Anda dari dehidrasi, tetapi juga berguna menjaga kesehatan gigi dan mulut dengan membersihkan sisa makanan yang asam dan lengket dari mulut. Sebaiknya minumlah air sehabis makan.",
+    "desc10" :
+    "Makanan yang mengandung asam dan gula dapat mengganggu kesehatan gigi dan mulut. Gula dapat menjadi asam di gigi yang mampu mengikis lapisan permukaan gigi dan menyebabkan lubang di gigi.",
+    "desc11" :
+    "Tidak hanya berpotensi menyebabkan kanker mulut, kandungan nikotin dan tar dalam rokok dapat memberikan warna kuning pada gigi, meningkatkan penumpukan plak gigi, serta merusak gusi dan tulang yang menyokong gigi Anda.",
+    "desc12" :
+    "Hal lain yang sering diabaikan dalam menjaga kesehatan gigi dan mulut adalah menjadwalkan pemeriksaan rutin dengan dokter gigi setidaknya dua kali dalam setahun.Menurut ahli, pemeriksaan dengan dokter gigi berguna untuk memeriksa kondisi gigi dan membersihkan karang gigi yang menumpuk.",
+    "aboutApp" :  "Tentang Aplikasi",
+    "aboutAppDesc" :  "Ketahui tentang aplikasi ini",
+    "helpApp" :  "Bantuan",
+    "helpAppDesc" :  "Tata cara menggunakan aplikasi ini"
+}

@@ -4,9 +4,9 @@ import 'package:dentistReservationApp/screens/qna/qna_screen.dart';
 import 'package:dentistReservationApp/screens/reservasi/reservasi_screen.dart';
 import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
-import 'package:dentistReservationApp/utils/strings.dart';
 import 'package:dentistReservationApp/utils/notification/notification.dart' as notif;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -24,15 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _listPage;
 
-  final _bottomNavBarItems = <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-        icon: Icon(Icons.home_filled), label: navBarTextHome),
-    BottomNavigationBarItem(icon: Icon(Icons.list), label: navBarTextReservasi),
-    BottomNavigationBarItem(
-        icon: Icon(Icons.chat_rounded), label: navBarTextQna),
-    BottomNavigationBarItem(icon: Icon(Icons.person), label: navBarTextProfile)
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -48,6 +39,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
+    final _bottomNavBarItems = <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+          icon: Icon(Icons.home_filled), label: AppLocalizations.of(context).navBarTextHome),
+      BottomNavigationBarItem(icon: Icon(Icons.list), label: AppLocalizations.of(context).navBarTextReservasi),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.chat_rounded), label: AppLocalizations.of(context).navBarTextQna),
+      BottomNavigationBarItem(icon: Icon(Icons.person), label: AppLocalizations.of(context).navBarTextProfile)
+    ];
+
     return Scaffold(
       body: _listPage[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

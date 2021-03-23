@@ -1,6 +1,6 @@
 import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
-import 'package:dentistReservationApp/utils/strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -13,7 +13,7 @@ class ReservasiScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          navBarTextReservasi,
+          AppLocalizations.of(context).navBarTextReservasi,
           style: TextStyle(
               color: kPrimary, fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
@@ -41,7 +41,7 @@ class ReservasiScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(nameHint,
+                        Text(AppLocalizations.of(context).nameHint,
                             style: TextStyle(fontSize: 14.0, color: kText2)),
                         SizedBox(height: getProportionateScreenWidth(8.0)),
                         Text(
@@ -54,7 +54,7 @@ class ReservasiScreen extends StatelessWidget {
                         SizedBox(
                           height: getProportionateScreenHeight(24.0),
                         ),
-                        Text(emailHint,
+                        Text(AppLocalizations.of(context).emailHint,
                             style: TextStyle(fontSize: 14.0, color: kText2)),
                         SizedBox(height: getProportionateScreenWidth(8.0)),
                         Text(
@@ -67,7 +67,7 @@ class ReservasiScreen extends StatelessWidget {
                         SizedBox(
                           height: getProportionateScreenHeight(24.0),
                         ),
-                        Text(time,
+                        Text(AppLocalizations.of(context).time,
                             style: TextStyle(fontSize: 14.0, color: kText2)),
                         SizedBox(height: getProportionateScreenWidth(8.0)),
                         Text(
@@ -80,7 +80,7 @@ class ReservasiScreen extends StatelessWidget {
                         SizedBox(
                           height: getProportionateScreenHeight(24.0),
                         ),
-                        Text(queueNumber,
+                        Text(AppLocalizations.of(context).queueNumber,
                             style: TextStyle(fontSize: 14.0, color: kText2)),
                         SizedBox(height: getProportionateScreenWidth(56.0)),
                         Align(
@@ -100,7 +100,7 @@ class ReservasiScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.center,
                           child: Text(
-                            note,
+                            AppLocalizations.of(context).note,
                             textAlign: TextAlign.center,
                             style: TextStyle(color: kText2, fontSize: 12.0),
                           ),
@@ -138,7 +138,7 @@ class EmptyReservasi extends StatelessWidget {
         ),
         Center(
             child: Text(
-          emptyReservasiTitle,
+              AppLocalizations.of(context).emptyReservasiTitle,
           style: TextStyle(
               color: kText1, fontWeight: FontWeight.bold, fontSize: 18.0),
         )),
@@ -152,11 +152,11 @@ class EmptyReservasi extends StatelessWidget {
             child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                    text: emptyReservasiSubtitle,
+                    text: AppLocalizations.of(context).emptyReservasiSubtitle,
                     style: TextStyle(fontSize: 16.0, color: kText2),
                     children: [
                       TextSpan(
-                          text: navBarTextHome,
+                          text: AppLocalizations.of(context).navBarTextHome,
                           style: TextStyle(
                               fontSize: 16.0,
                               color: kPrimary,

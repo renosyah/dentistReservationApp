@@ -23,6 +23,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:
@@ -37,7 +40,6 @@ dev_dependencies:
   flutter_local_notifications: ^4.0.0
   font_awesome_flutter: ^8.11.0
   http: ^0.12.2
-  intl: ^0.16.1
   shared_preferences: ^0.5.12+4
   carousel_slider: ^3.0.0
 
@@ -50,7 +52,7 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
 flutter:
-
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

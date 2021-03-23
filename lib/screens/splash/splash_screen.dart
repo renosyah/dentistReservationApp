@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:dentistReservationApp/routing/constanta.dart';
 import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
-import 'package:dentistReservationApp/utils/strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -52,14 +52,14 @@ class _SplashScreenState extends State<SplashScreen> {
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                    text: developer,
+                    text: AppLocalizations.of(context).developer,
                     style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                         color: kPrimary),
                     children: [
                       TextSpan(
-                          text: nim,
+                          text: AppLocalizations.of(context).nim,
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
