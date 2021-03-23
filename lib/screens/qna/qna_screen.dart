@@ -1,8 +1,11 @@
+import 'package:dentistReservationApp/models/QuestionAndAnswer.dart';
 import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class QnaScreen extends StatefulWidget {
   static final data = true;
@@ -16,8 +19,20 @@ class QnaScreen extends StatefulWidget {
 
 class _QnaScreenState extends State<QnaScreen> {
   ValueChanged<int> onTap;
+  Stream<QuerySnapshot> _qna;
 
   _QnaScreenState({this.onTap});
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    _qna = FirebaseFirestore.instance
+        .collection("qna")
+        .where('user_id', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+        .snapshots();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,30 +45,39 @@ class _QnaScreenState extends State<QnaScreen> {
               color: kPrimary, fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
       ),
-      body: QnaScreen.data
-          ? SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(24.0)),
-                child: Column(
-                  children: [
-                    ...List.generate(3, (index) => BuildQnaItem()),
-                    SizedBox(
-                      height: getProportionateScreenWidth(24.0),
-                    )
-                  ],
+      body: StreamBuilder<QuerySnapshot>(
+          stream: _qna,
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data.docs.isNotEmpty){
+              List<QuestionAndAnswer> item = [];
+              for (DocumentSnapshot snap in snapshot.data.docs) {
+                item.add(QuestionAndAnswer.fromJson(snap.data()));
+              }
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(24.0)),
+                  child: Column(
+                    children: [
+                      ...item.map((e) => BuildQnaItem(questionAndAnswer: e)),
+                      SizedBox(
+                        height: getProportionateScreenWidth(24.0),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            )
-          : EmptyQna(),
+              );
+            }
+            return EmptyQna();
+          }
+      ),
     );
   }
 }
 
 class BuildQnaItem extends StatelessWidget {
-  const BuildQnaItem({
-    Key key,
-  }) : super(key: key);
+  QuestionAndAnswer questionAndAnswer;
+  BuildQnaItem({ this.questionAndAnswer });
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +110,11 @@ class BuildQnaItem extends StatelessWidget {
                             style: TextStyle(fontSize: 14.0, color: kText2)),
                         SizedBox(height: getProportionateScreenWidth(8.0)),
                         Text(
-                          "Dok, kenapa gigi saya sakit tiba-tiba ?",
+                          questionAndAnswer.question,
                           style: TextStyle(
                               color: kText1,
                               fontSize: 18.0,
+                              fontFamily: 'Roboto',
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
@@ -99,9 +124,10 @@ class BuildQnaItem extends StatelessWidget {
                             style: TextStyle(fontSize: 14.0, color: kText2)),
                         SizedBox(height: getProportionateScreenWidth(8.0)),
                         Text(
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                          questionAndAnswer.answer,
                           style: TextStyle(
                               color: kText1,
+                              fontFamily: 'Roboto',
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold),
                         ),
@@ -133,7 +159,7 @@ class BuildQnaItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Dok, kenapa gigi saya sering sakit tiba-tiba ?",
+                questionAndAnswer.question,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -146,11 +172,11 @@ class BuildQnaItem extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   text: TextSpan(
-                      text: AppLocalizations.of(context).answer,
+                      text: "${AppLocalizations.of(context).answer}",
                       style: TextStyle(color: kPrimary, fontSize: 14.0),
                       children: [
                         TextSpan(
-                            text: AppLocalizations.of(context).pending,
+                            text: "${questionAndAnswer.answer.isEmpty ? AppLocalizations.of(context).pending : questionAndAnswer.answer}",
                             style: TextStyle(color: kPending, fontSize: 14.0))
                       ]))
             ],

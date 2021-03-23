@@ -53,7 +53,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> getUserData() async {
     User userData = FirebaseAuth.instance.currentUser;
     if (userData == null) return;
-    Navigator.pushReplacementNamed(context, home);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      Navigator.pushReplacementNamed(context, home);
+    });
+
   }
 
   @override

@@ -1,3 +1,6 @@
+import 'package:dentistReservationApp/models/Counter.dart';
+import 'package:dentistReservationApp/models/QuestionAndAnswer.dart';
+import 'package:dentistReservationApp/models/Reservation.dart';
 import 'package:dentistReservationApp/models/data_tips_and_tricks.dart';
 import 'package:dentistReservationApp/screens/detail/detail_tips_screen.dart';
 import 'package:dentistReservationApp/utils/colors.dart';
@@ -5,6 +8,8 @@ import 'package:dentistReservationApp/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart' as carousel;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class BodyHome extends StatefulWidget {
   final ValueChanged<int> onTap;
@@ -16,12 +21,81 @@ class BodyHome extends StatefulWidget {
 
 class _BodyHomeState extends State<BodyHome> {
   int _currentIndex = 0;
-
   ValueChanged<int> onTap;
+  User user;
 
   _BodyHomeState({this.onTap});
 
   carousel.CarouselController _carouselController = carousel.CarouselController();
+  TextEditingController _controllerQuestion = TextEditingController();
+
+
+  Future<void> getUserData() async {
+    User userData = FirebaseAuth.instance.currentUser;
+    setState(() {
+      user = userData;
+    });
+  }
+
+  void _checkCurrentQueue() async {
+
+    var query = await FirebaseFirestore.instance
+        .collection("reservation")
+        .where('user_id', isEqualTo: user.uid)
+        .where('time', isGreaterThan : DateTime.now())
+        .limit(1)
+        .get();
+
+    if (query.docs.isNotEmpty) return;
+    _createQueue();
+
+  }
+
+  void _createQueue(){
+
+    FirebaseFirestore.instance
+      .collection("counter")
+      .limit(1)
+      .get().then((value){
+        if (value.docs.isNotEmpty && value.docs[0] != null){
+            int counter = value.docs[0].data()['counter_id'];
+            DateTime time = value.docs[0].data()['time'].toDate();
+
+            FirebaseFirestore.instance
+                .collection("reservation")
+                .doc()
+                .set(new Reservation(userId : user.uid, queueNumber: counter,name: user.displayName,time: time).toJson());
+
+            FirebaseFirestore.instance
+                .collection("counter")
+                .doc(value.docs[0].id)
+                .set(new Counter(counterId: counter + 1,time: time.add(new Duration(minutes: 30))).toJson());
+        }
+    });
+
+  }
+
+  void _sendQuestion(){
+    if (_controllerQuestion.text.toString().trim().isEmpty){
+      print("question must not be empty");
+      return;
+    }
+
+    // add to document qna
+    FirebaseFirestore.instance
+        .collection("qna")
+        .add(new QuestionAndAnswer(userId:user.uid, question: _controllerQuestion.text.toString(), answer: "", time: DateTime.now()).toJson());
+
+    // question and answer
+    Navigator.pop(context);
+    this.onTap(2);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,9 +222,7 @@ class _BodyHomeState extends State<BodyHome> {
             height: getProportionateScreenHeight(16.0),
           ),
           GestureDetector(
-            onTap: () {
-              this.onTap(1);
-            },
+            onTap: () { this._checkCurrentQueue(); this.onTap(1); },
             child: Stack(
               children: [
                 Padding(
@@ -244,6 +316,7 @@ class _BodyHomeState extends State<BodyHome> {
                               ),
                               Form(
                                   child: TextFormField(
+                                    controller: _controllerQuestion,
                                 keyboardType: TextInputType.name,
                                 decoration: InputDecoration(
                                   hintText: AppLocalizations.of(context).askingHint,
@@ -269,10 +342,7 @@ class _BodyHomeState extends State<BodyHome> {
                                     width: double.infinity,
                                     height: getProportionateScreenHeight(72.0)),
                                 child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    this.onTap(2);
-                                  },
+                                  onPressed: () { this._sendQuestion(); },
                                   style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(kPrimary),
