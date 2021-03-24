@@ -60,6 +60,9 @@ class _BodyHomeState extends State<BodyHome> {
         if (value.docs.isNotEmpty && value.docs[0] != null){
             int counter = value.docs[0].data()['counter_id'];
             DateTime time = value.docs[0].data()['time'].toDate();
+            DateTime now = DateTime.now();
+
+            if (time.day != now.day && time.month == now.month && time.year == now.year) time = now;
 
             FirebaseFirestore.instance
                 .collection("reservation")
