@@ -112,13 +112,14 @@ class BuildQnaItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(AppLocalizations.of(context).ask,
-                            style: TextStyle(fontSize: 14.0, color: kText2)),
+                            style: TextStyle(fontSize: 14.0, color: kText2, decoration: TextDecoration.none)),
                         SizedBox(height: getProportionateScreenWidth(8.0)),
                         Text(
                           questionAndAnswer.question,
                           style: TextStyle(
                               color: kText1,
                               fontSize: 18.0,
+                              decoration: TextDecoration.none,
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.bold),
                         ),
@@ -126,13 +127,14 @@ class BuildQnaItem extends StatelessWidget {
                           height: getProportionateScreenHeight(24.0),
                         ),
                         Text(AppLocalizations.of(context).textAnswer,
-                            style: TextStyle(fontSize: 14.0, color: kText2)),
+                            style: TextStyle(fontSize: 14.0, color: kText2, decoration: TextDecoration.none)),
                         SizedBox(height: getProportionateScreenWidth(8.0)),
                         Text(
                           questionAndAnswer.answer,
                           style: TextStyle(
                               color: kText1,
                               fontFamily: 'Roboto',
+                              decoration: TextDecoration.none,
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold),
                         ),

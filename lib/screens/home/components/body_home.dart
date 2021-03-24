@@ -225,7 +225,7 @@ class _BodyHomeState extends State<BodyHome> {
             height: getProportionateScreenHeight(16.0),
           ),
           GestureDetector(
-            onTap: () { this._checkCurrentQueue(); this.onTap(1); },
+            onTap: () { Navigator.pushNamed(context, createReservation); },
             child: Stack(
               children: [
                 Padding(
