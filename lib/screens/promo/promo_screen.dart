@@ -12,6 +12,7 @@ class _PromoScreenState extends State<PromoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appbar beserta judul
       appBar: AppBar(
         title: Text(
           promoTextAppBar,
@@ -26,6 +27,7 @@ class _PromoScreenState extends State<PromoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // menggunakan list untuk menampilkan item promo
               ...List.generate(2, (index) => BuildPromoItem()),
               SizedBox(
                 height: getProportionateScreenWidth(24.0),
@@ -38,6 +40,7 @@ class _PromoScreenState extends State<PromoScreen> {
   }
 }
 
+// item untuk build promo agar bisa di looping
 class BuildPromoItem extends StatelessWidget {
   const BuildPromoItem({
     Key key,
@@ -68,6 +71,7 @@ class BuildPromoItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // menampilkan judul promo
                   Text(
                     "Voucher Rp. 20.000",
                     maxLines: 2,
@@ -80,6 +84,7 @@ class BuildPromoItem extends StatelessWidget {
                   SizedBox(
                     height: getProportionateScreenHeight(4.0),
                   ),
+                  // menampilkan subtitle dari promo
                   Text(
                     "Spesial Promo Hari Ulang Tahun Klinik D'Gigi",
                     style: TextStyle(fontSize: 14.0, color: kText2),
@@ -90,6 +95,7 @@ class BuildPromoItem extends StatelessWidget {
             SizedBox(
               width: getProportionateScreenWidth(16.0),
             ),
+            // button untuk kalim promo
             ConstrainedBox(
               constraints: BoxConstraints.tightFor(
                   width: getProportionateScreenWidth(96.0),

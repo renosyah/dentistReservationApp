@@ -12,7 +12,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   static Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
@@ -21,7 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _validation(BuildContext context) {
     RegExp regExp = RegExp(_LoginScreenState.pattern);
-    if (_controllerEmail.text.trim().isEmpty || !regExp.hasMatch(_controllerEmail.text)) {
+    if (_controllerEmail.text.trim().isEmpty ||
+        !regExp.hasMatch(_controllerEmail.text)) {
       print("email invalid");
       return;
     }
@@ -30,14 +30,15 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    _login(context, _controllerEmail.text.toString(),_controllerPassword.text.toString());
+    _login(context, _controllerEmail.text.toString(),
+        _controllerPassword.text.toString());
   }
 
-  void _login(BuildContext context,String email,String password) async {
+  void _login(BuildContext context, String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
       Navigator.pushReplacementNamed(context, home);
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("user not found");
@@ -57,7 +58,6 @@ class _LoginScreenState extends State<LoginScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       Navigator.pushReplacementNamed(context, home);
     });
-
   }
 
   @override
@@ -68,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // inisialisasi ukuran smartphone
     SizeConfig().init(context);
     return Scaffold(
       body: SingleChildScrollView(
@@ -78,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: getProportionateScreenHeight(136.0),
               ),
+              // menampilkan gambar atau logo
               Image.asset(
                 "assets/logo/logo.png",
                 width: getProportionateScreenWidth(160.0),
@@ -88,57 +90,60 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Form(
                   child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenWidth(24.0)),
-                        child: TextFormField(
-                          controller: _controllerEmail,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            hintText: AppLocalizations.of(context).emailHint,
-                            filled: true,
-                            fillColor: kBackgroundTextField,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(24.0),
-                                vertical: getProportionateScreenWidth(16.0)),
-                            border: OutlineInputBorder(
-                                borderSide:
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(24.0)),
+                    child: TextFormField(
+                      // menampilkan field untuk memasukan email
+                      controller: _controllerEmail,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context).emailHint,
+                        filled: true,
+                        fillColor: kBackgroundTextField,
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(24.0),
+                            vertical: getProportionateScreenWidth(16.0)),
+                        border: OutlineInputBorder(
+                            borderSide:
                                 BorderSide(width: 0.0, style: BorderStyle.none),
-                                borderRadius: BorderRadius.circular(
-                                    getProportionateScreenWidth(8.0))),
-                          ),
-                        ),
+                            borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(8.0))),
                       ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(36.0),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenWidth(24.0)),
-                        child: TextFormField(
-                          controller: _controllerPassword,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            hintText: AppLocalizations.of(context).passwordHint,
-                            filled: true,
-                            fillColor: kBackgroundTextField,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(24.0),
-                                vertical: getProportionateScreenWidth(16.0)),
-                            border: OutlineInputBorder(
-                                borderSide:
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(36.0),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(24.0)),
+                    child: TextFormField(
+                      // menampilkan field untuk memasukan password
+                      controller: _controllerPassword,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context).passwordHint,
+                        filled: true,
+                        fillColor: kBackgroundTextField,
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(24.0),
+                            vertical: getProportionateScreenWidth(16.0)),
+                        border: OutlineInputBorder(
+                            borderSide:
                                 BorderSide(width: 0.0, style: BorderStyle.none),
-                                borderRadius: BorderRadius.circular(
-                                    getProportionateScreenWidth(8.0))),
-                          ),
-                        ),
-                      )
-                    ],
-                  )),
+                            borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(8.0))),
+                      ),
+                    ),
+                  )
+                ],
+              )),
               SizedBox(
                 height: getProportionateScreenHeight(120.0),
               ),
+              // button login
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(24.0)),
@@ -147,7 +152,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: double.infinity,
                       height: getProportionateScreenHeight(72.0)),
                   child: ElevatedButton(
-                    onPressed: () { this._validation(context); },
+                    onPressed: () {
+                      this._validation(context);
+                    },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(kPrimary),
                         elevation: MaterialStateProperty.all(0)),
@@ -165,27 +172,26 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: getProportionateScreenHeight(36.0),
               ),
+              // text sekaligus navigasi ke halaman register atau daftar
               RichText(
                   text: TextSpan(
                       text: AppLocalizations.of(context).dontHaveAnAccountYet,
                       style: TextStyle(color: kText2, fontSize: 16.0),
                       children: [
-                        TextSpan(
-                            text: AppLocalizations.of(context).registerText,
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                color: kPrimary,
-                                fontWeight: FontWeight.bold),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () =>
-                                  Navigator.pushReplacementNamed(context, register))
-                      ]))
+                    TextSpan(
+                        text: AppLocalizations.of(context).registerText,
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            color: kPrimary,
+                            fontWeight: FontWeight.bold),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () =>
+                              Navigator.pushReplacementNamed(context, register))
+                  ]))
             ],
           ),
         ),
       ),
     );
   }
-
 }
-

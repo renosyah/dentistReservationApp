@@ -7,6 +7,7 @@ import 'package:dentistReservationApp/screens/register/register_screen.dart';
 import 'package:dentistReservationApp/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
+// kumpulan navigation dari constanta.dart
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {

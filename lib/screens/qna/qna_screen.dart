@@ -23,7 +23,6 @@ class _QnaScreenState extends State<QnaScreen> {
 
   _QnaScreenState({this.onTap});
 
-
   @override
   void initState() {
     super.initState();
@@ -48,7 +47,7 @@ class _QnaScreenState extends State<QnaScreen> {
       body: StreamBuilder<QuerySnapshot>(
           stream: _qna,
           builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data.docs.isNotEmpty){
+            if (snapshot.hasData && snapshot.data.docs.isNotEmpty) {
               List<QuestionAndAnswer> item = [];
               for (DocumentSnapshot snap in snapshot.data.docs) {
                 item.add(QuestionAndAnswer.fromJson(snap.data()));
@@ -59,6 +58,7 @@ class _QnaScreenState extends State<QnaScreen> {
                       horizontal: getProportionateScreenWidth(24.0)),
                   child: Column(
                     children: [
+                      // menampilkan item list untuk tanya jawab
                       ...item.map((e) => BuildQnaItem(questionAndAnswer: e)),
                       SizedBox(
                         height: getProportionateScreenWidth(24.0),
@@ -67,26 +67,27 @@ class _QnaScreenState extends State<QnaScreen> {
                   ),
                 ),
               );
-            } else if (snapshot.hasData && snapshot.data.docs.isEmpty){
+            } else if (snapshot.hasData && snapshot.data.docs.isEmpty) {
+              // jika datanya kosong
               return EmptyQna();
             }
 
             return Center(
               child: CircularProgressIndicator(),
             );
-          }
-      ),
+          }),
     );
   }
 }
 
 class BuildQnaItem extends StatelessWidget {
   QuestionAndAnswer questionAndAnswer;
-  BuildQnaItem({ this.questionAndAnswer });
+  BuildQnaItem({this.questionAndAnswer});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      // menampilkan detail dari tanya jawab menggunakan dialog
       onTap: () => showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -112,8 +113,12 @@ class BuildQnaItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(AppLocalizations.of(context).ask,
-                            style: TextStyle(fontSize: 14.0, color: kText2, decoration: TextDecoration.none)),
+                            style: TextStyle(
+                                fontSize: 14.0,
+                                color: kText2,
+                                decoration: TextDecoration.none)),
                         SizedBox(height: getProportionateScreenWidth(8.0)),
+                        // menampilkan pertanyaan
                         Text(
                           questionAndAnswer.question,
                           style: TextStyle(
@@ -127,8 +132,12 @@ class BuildQnaItem extends StatelessWidget {
                           height: getProportionateScreenHeight(24.0),
                         ),
                         Text(AppLocalizations.of(context).textAnswer,
-                            style: TextStyle(fontSize: 14.0, color: kText2, decoration: TextDecoration.none)),
+                            style: TextStyle(
+                                fontSize: 14.0,
+                                color: kText2,
+                                decoration: TextDecoration.none)),
                         SizedBox(height: getProportionateScreenWidth(8.0)),
+                        // menampilkan jawaban
                         Text(
                           questionAndAnswer.answer,
                           style: TextStyle(
@@ -145,6 +154,7 @@ class BuildQnaItem extends StatelessWidget {
               ),
             );
           }),
+      // item tanya jawab
       child: Container(
         width: double.infinity,
         margin: EdgeInsets.only(top: getProportionateScreenWidth(24.0)),
@@ -165,9 +175,12 @@ class BuildQnaItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              // menampilkan pertanyaan
               Text(
                 questionAndAnswer.question,
+                // pertanyaan maksimal 2 baris
                 maxLines: 2,
+                // jika lebih dari 2 baris makan ditampilkan titik titik
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                     color: kText1, fontWeight: FontWeight.bold, fontSize: 18.0),
@@ -175,15 +188,18 @@ class BuildQnaItem extends StatelessWidget {
               SizedBox(
                 height: getProportionateScreenHeight(4.0),
               ),
+              // menampilkan jawaban
               RichText(
                   maxLines: 1,
+                  // jika lebih dari 2 baris makan ditampilkan titik titik
                   overflow: TextOverflow.ellipsis,
                   text: TextSpan(
                       text: "${AppLocalizations.of(context).answer}",
                       style: TextStyle(color: kPrimary, fontSize: 14.0),
                       children: [
                         TextSpan(
-                            text: "${questionAndAnswer.answer.isEmpty ? AppLocalizations.of(context).pending : questionAndAnswer.answer}",
+                            text:
+                                "${questionAndAnswer.answer.isEmpty ? AppLocalizations.of(context).pending : questionAndAnswer.answer}",
                             style: TextStyle(color: kPending, fontSize: 14.0))
                       ]))
             ],
@@ -194,6 +210,7 @@ class BuildQnaItem extends StatelessWidget {
   }
 }
 
+// halaman ini akan ditampilkan jika data tanya jawab masih kosong
 class EmptyQna extends StatelessWidget {
   const EmptyQna({
     Key key,
@@ -206,6 +223,7 @@ class EmptyQna extends StatelessWidget {
         SizedBox(
           height: getProportionateScreenWidth(112.0),
         ),
+        // menampilkan ilustrasi
         Center(
             child: SvgPicture.asset(
           "assets/illustrations/emptyqna.svg",
@@ -214,15 +232,17 @@ class EmptyQna extends StatelessWidget {
         SizedBox(
           height: getProportionateScreenHeight(56.0),
         ),
+        // menampilkan judul halaman kosong
         Center(
             child: Text(
-              AppLocalizations.of(context).emptyQnaTitle,
+          AppLocalizations.of(context).emptyQnaTitle,
           style: TextStyle(
               color: kText1, fontWeight: FontWeight.bold, fontSize: 18.0),
         )),
         SizedBox(
           height: getProportionateScreenHeight(24.0),
         ),
+        // menampilkan subjudul halaman kosong
         Padding(
           padding: EdgeInsets.symmetric(
               horizontal: getProportionateScreenWidth(36.0)),

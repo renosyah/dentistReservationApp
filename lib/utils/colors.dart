@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// kumpulaan warna
 const kBackground = Color(0xFFFDFDFD);
 const kBackgroundTextField = Color(0xFFF5F5F5);
 const kWhite = Colors.white;

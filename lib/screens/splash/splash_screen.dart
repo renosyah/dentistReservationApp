@@ -38,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           children: [
             Spacer(),
+            // menampilkan logo aplikasi
             Align(
               alignment: Alignment.center,
               child: Image.asset(
@@ -47,6 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             Spacer(),
+            // menampilkan identitas pemilik aplikasi
             Align(
               alignment: Alignment.center,
               child: RichText(

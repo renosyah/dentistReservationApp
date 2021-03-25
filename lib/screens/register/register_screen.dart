@@ -12,8 +12,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
-
   static Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
@@ -22,14 +20,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController _controllerPassword = TextEditingController();
 
   void _validation(BuildContext context) {
-
     if (_controllerName.text.trim().isEmpty) {
       print("name invalid");
       return;
     }
 
     RegExp regExp = RegExp(_RegisterScreenState.pattern);
-    if (_controllerEmail.text.trim().isEmpty || !regExp.hasMatch(_controllerEmail.text)) {
+    if (_controllerEmail.text.trim().isEmpty ||
+        !regExp.hasMatch(_controllerEmail.text)) {
       print("email invalid");
       return;
     }
@@ -38,21 +36,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return;
     }
 
-    _register(context,_controllerName.text.toString(), _controllerEmail.text.toString(),_controllerPassword.text.toString());
+    _register(context, _controllerName.text.toString(),
+        _controllerEmail.text.toString(), _controllerPassword.text.toString());
   }
 
-  void _register(BuildContext context,String name,String email,String password) async {
+  void _register(
+      BuildContext context, String name, String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-      await userCredential.user.updateProfile(displayName: name,photoURL: '').then((value) {
-
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      await userCredential.user
+          .updateProfile(displayName: name, photoURL: '')
+          .then((value) {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
           await FirebaseAuth.instance.signOut();
           Navigator.pushReplacementNamed(context, login);
         });
-
       });
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("user not found");
@@ -63,7 +63,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +76,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(
                 height: getProportionateScreenHeight(136.0),
               ),
+              // menampilkan gambar atau logo
               Image.asset(
                 "assets/logo/logo.png",
                 width: getProportionateScreenWidth(120.0),
@@ -87,81 +87,85 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               Form(
                   child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenWidth(24.0)),
-                        child: TextFormField(
-                          controller: _controllerName,
-                          keyboardType: TextInputType.name,
-                          decoration: InputDecoration(
-                            hintText: AppLocalizations.of(context).nameHint,
-                            filled: true,
-                            fillColor: kBackgroundTextField,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(24.0),
-                                vertical: getProportionateScreenWidth(16.0)),
-                            border: OutlineInputBorder(
-                                borderSide:
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(24.0)),
+                    child: TextFormField(
+                      // textfield untuk memasukan nama
+                      controller: _controllerName,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context).nameHint,
+                        filled: true,
+                        fillColor: kBackgroundTextField,
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(24.0),
+                            vertical: getProportionateScreenWidth(16.0)),
+                        border: OutlineInputBorder(
+                            borderSide:
                                 BorderSide(width: 0.0, style: BorderStyle.none),
-                                borderRadius: BorderRadius.circular(
-                                    getProportionateScreenWidth(8.0))),
-                          ),
-                        ),
+                            borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(8.0))),
                       ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(36.0),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenWidth(24.0)),
-                        child: TextFormField(
-                          controller: _controllerEmail,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            hintText: AppLocalizations.of(context).emailHint,
-                            filled: true,
-                            fillColor: kBackgroundTextField,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(24.0),
-                                vertical: getProportionateScreenWidth(16.0)),
-                            border: OutlineInputBorder(
-                                borderSide:
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(36.0),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(24.0)),
+                    child: TextFormField(
+                      // textfield untuk memasukan email
+                      controller: _controllerEmail,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context).emailHint,
+                        filled: true,
+                        fillColor: kBackgroundTextField,
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(24.0),
+                            vertical: getProportionateScreenWidth(16.0)),
+                        border: OutlineInputBorder(
+                            borderSide:
                                 BorderSide(width: 0.0, style: BorderStyle.none),
-                                borderRadius: BorderRadius.circular(
-                                    getProportionateScreenWidth(8.0))),
-                          ),
-                        ),
+                            borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(8.0))),
                       ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(36.0),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenWidth(24.0)),
-                        child: TextFormField(
-                          controller: _controllerPassword,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            hintText: AppLocalizations.of(context).passwordHint,
-                            filled: true,
-                            fillColor: kBackgroundTextField,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(24.0),
-                                vertical: getProportionateScreenWidth(16.0)),
-                            border: OutlineInputBorder(
-                                borderSide:
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(36.0),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(24.0)),
+                    child: TextFormField(
+                      // textfield untuk memasukan password
+                      controller: _controllerPassword,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context).passwordHint,
+                        filled: true,
+                        fillColor: kBackgroundTextField,
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(24.0),
+                            vertical: getProportionateScreenWidth(16.0)),
+                        border: OutlineInputBorder(
+                            borderSide:
                                 BorderSide(width: 0.0, style: BorderStyle.none),
-                                borderRadius: BorderRadius.circular(
-                                    getProportionateScreenWidth(8.0))),
-                          ),
-                        ),
-                      )
-                    ],
-                  )),
+                            borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(8.0))),
+                      ),
+                    ),
+                  )
+                ],
+              )),
               SizedBox(
                 height: getProportionateScreenHeight(120.0),
               ),
+              // tombol register atau daftar
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(24.0)),
@@ -188,21 +192,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(
                 height: getProportionateScreenHeight(36.0),
               ),
+              // text sekaligus navigasi jika akun pernah dibuat
               RichText(
                   text: TextSpan(
                       text: AppLocalizations.of(context).alreadyHaveAnAccount,
                       style: TextStyle(color: kText2, fontSize: 16.0),
                       children: [
-                        TextSpan(
-                            text: AppLocalizations.of(context).loginText,
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                color: kPrimary,
-                                fontWeight: FontWeight.bold),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () =>
-                                  Navigator.pushReplacementNamed(context, login))
-                      ]))
+                    TextSpan(
+                        text: AppLocalizations.of(context).loginText,
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            color: kPrimary,
+                            fontWeight: FontWeight.bold),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () =>
+                              Navigator.pushReplacementNamed(context, login))
+                  ]))
             ],
           ),
         ),
@@ -210,4 +215,3 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
-

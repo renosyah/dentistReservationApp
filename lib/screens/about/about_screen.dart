@@ -7,6 +7,7 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appbar beserta judul
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context).aboutApp,
@@ -14,6 +15,7 @@ class AboutScreen extends StatelessWidget {
               color: kPrimary, fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
       ),
+      // tampilan isi dari screen
       body: Padding(
         padding: EdgeInsets.all(getProportionateScreenWidth(24.0)),
         child: Text(

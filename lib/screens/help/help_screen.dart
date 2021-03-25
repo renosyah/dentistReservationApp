@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class HelpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // appbar beserta judul
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -14,6 +15,7 @@ class HelpScreen extends StatelessWidget {
               color: kPrimary, fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
       ),
+      // isi atau content yang ditampilkan
       body: Padding(
         padding: EdgeInsets.all(getProportionateScreenWidth(24.0)),
         child: Text(

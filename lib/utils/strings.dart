@@ -1,3 +1,5 @@
+// kumpulan string
+
 // text
 const nameHint = "Nama";
 const emailHint = "Email";

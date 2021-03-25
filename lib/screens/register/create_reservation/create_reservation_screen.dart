@@ -20,6 +20,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appbar beserta judul
       appBar: AppBar(
         title: Text(
           createReservationApp,
@@ -39,7 +40,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
             SizedBox(
               height: getProportionateScreenHeight(8.0),
             ),
-            // field choose date
+            // field untuk memasukan tanggal
             Form(
                 child: TextFormField(
               onTap: () {
@@ -73,7 +74,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
             SizedBox(
               height: getProportionateScreenHeight(8.0),
             ),
-            // field choose time
+            // field untuk memasukan waktu
             Form(
                 child: TextFormField(
               onTap: () {
@@ -98,6 +99,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
               ),
             )),
             Spacer(),
+            // tombol untuk buat reservasi
             ConstrainedBox(
               constraints: BoxConstraints.tightFor(
                   width: double.infinity,
@@ -133,6 +135,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
     );
   }
 
+  // funsi untuk menampilkan tanggal dalam bentuk datepicker
   _selectTime(BuildContext context) async {
     TimeOfDay _newSelectedTime = await showTimePicker(
         context: context,
@@ -145,6 +148,8 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
               buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
             ),
             child: child));
+
+    // menampilkan waktu yang dipilih ke dalam field pilih waktu
     if (_newSelectedTime != null) {
       _selectedTime = _newSelectedTime;
       _textTimeController
@@ -155,7 +160,9 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
     }
   }
 
+  // funsi untuk menampilkan waktu dalam bentuk timepicker
   _selectDate(BuildContext context) async {
+    // menampilkan 5 hari selain sabtu dan minggu dalam 1 minggu
     bool _decideWhichDayToEnable(DateTime day) {
       if ((day.isAfter(DateTime.now().subtract(Duration(days: 1))) &&
               day.isBefore(DateTime.now().add(Duration(days: 6)))) &&
@@ -180,6 +187,8 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
               buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
             ),
             child: child));
+
+    // menampilkan tanggal yang dipilih ke dalam field pilih tanggal
     if (newSelectedDate != null) {
       _selectedDate = newSelectedDate;
       _textDateController
@@ -191,6 +200,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
   }
 }
 
+// kelas untuk me-non-aktif-kan focus pada field
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;

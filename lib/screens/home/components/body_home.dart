@@ -113,6 +113,7 @@ class _BodyHomeState extends State<BodyHome> {
     List<TipsAndTrick> _tipsAndTrick =
         new TipsAndTrick().getListTrickAndTips(context);
     return Scaffold(
+      // appbar beserta judul dan icon promo
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
@@ -132,9 +133,12 @@ class _BodyHomeState extends State<BodyHome> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // slider (gambar bergerak) / banner dari tips and trik
           carousel.CarouselSlider(
             items: new TipsAndTrick().getListTrickAndTips(context).map((data) {
+              // tambahakan gesture detector agar item dapat diklik
               return GestureDetector(
+                // navigasi ke halaman detail tips dan trik
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -186,14 +190,22 @@ class _BodyHomeState extends State<BodyHome> {
                 ),
               );
             }).toList(),
+            // pengaturan Carousel
             options: carousel.CarouselOptions(
+                // durasi animasi
                 autoPlayAnimationDuration: Duration(seconds: 1),
+                // durasi jarak antar banner
                 autoPlayInterval: Duration(seconds: 2),
+                // tinggi keseluruhan dari banner
                 height: getProportionateScreenWidth(180.0),
+                // otomatisasi perpindahan banner
                 autoPlay: true,
+                // membuat banner dengan index aktif menjadi lebih besar
                 enlargeCenterPage: true,
+                // berhenti pada banner tertentu jika diklik
                 pauseAutoPlayOnTouch: true,
                 aspectRatio: 2.0,
+                // besaran banner antar yang lain
                 viewportFraction: 0.9,
                 onPageChanged: (index, reason) {
                   setState(() {
@@ -210,6 +222,7 @@ class _BodyHomeState extends State<BodyHome> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: _tipsAndTrick.map((data) {
                 int index = _tipsAndTrick.lastIndexOf(data);
+                // bagian indicator
                 return AnimatedContainer(
                   duration: Duration(milliseconds: 400),
                   margin: EdgeInsets.symmetric(
@@ -226,9 +239,11 @@ class _BodyHomeState extends State<BodyHome> {
               }).toList(),
             ),
           ),
+          // jarak antar elemen
           SizedBox(
             height: getProportionateScreenHeight(36.0),
           ),
+          // judul paddda fitur
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(24.0)),
@@ -241,11 +256,13 @@ class _BodyHomeState extends State<BodyHome> {
           SizedBox(
             height: getProportionateScreenHeight(16.0),
           ),
+          // item untuk menuju halaman buat reservasi
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, createReservation);
             },
             child: Stack(
+              // menggunakan stack untuk menimpa antar elemen
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -270,6 +287,7 @@ class _BodyHomeState extends State<BodyHome> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          // menampikan text reservasi
                           Text(
                             AppLocalizations.of(context).navBarTextReservasi,
                             style: TextStyle(color: kText1, fontSize: 20.0),
@@ -277,6 +295,7 @@ class _BodyHomeState extends State<BodyHome> {
                           SizedBox(
                             height: getProportionateScreenHeight(4.0),
                           ),
+                          // menampikan subtitle dari reservasi
                           Text(
                             AppLocalizations.of(context).subtitleReservasi,
                             style: TextStyle(color: kText2, fontSize: 14.0),
@@ -286,6 +305,7 @@ class _BodyHomeState extends State<BodyHome> {
                     ),
                   ),
                 ),
+                // menggunakan positioned untuk menempatkan button ditengah tengah item
                 Positioned(
                   right: 0.0,
                   top: 1.0,
@@ -307,9 +327,12 @@ class _BodyHomeState extends State<BodyHome> {
           SizedBox(
             height: getProportionateScreenHeight(24.0),
           ),
+          // item untuk membuat pertanyaan
           GestureDetector(
             onTap: () {
+              // menampilkan modal bottom sheet
               showModalBottomSheet(
+                  // mengatifkan fungsi bottom sheet dapat digulirkan atau di scroll
                   isScrollControlled: true,
                   context: context,
                   shape: RoundedRectangleBorder(
@@ -323,7 +346,6 @@ class _BodyHomeState extends State<BodyHome> {
                           padding:
                               EdgeInsets.all(getProportionateScreenWidth(24.0)),
                           child: Column(
-                            // overflowed 41 pixel column
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -336,6 +358,7 @@ class _BodyHomeState extends State<BodyHome> {
                               SizedBox(
                                 height: getProportionateScreenWidth(24.0),
                               ),
+                              // form untuk memasukan pertanyaan
                               Form(
                                   child: TextFormField(
                                 controller: _controllerQuestion,
@@ -360,6 +383,7 @@ class _BodyHomeState extends State<BodyHome> {
                               SizedBox(
                                 height: getProportionateScreenWidth(36.0),
                               ),
+                              // bottom untuk mengirimkan pertanyaan
                               ConstrainedBox(
                                 constraints: BoxConstraints.tightFor(
                                     width: double.infinity,
@@ -388,6 +412,7 @@ class _BodyHomeState extends State<BodyHome> {
                       ));
             },
             child: Stack(
+              // menggunakan stack agar dapat menimpa antar elemen
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -412,6 +437,7 @@ class _BodyHomeState extends State<BodyHome> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          // menampilkan text tanya jawab
                           Text(
                             AppLocalizations.of(context).navBarTextQna,
                             style: TextStyle(color: kText1, fontSize: 20.0),
@@ -419,6 +445,7 @@ class _BodyHomeState extends State<BodyHome> {
                           SizedBox(
                             height: getProportionateScreenHeight(4.0),
                           ),
+                          // menampilkan text subtitle dari tanya jawab
                           Text(
                             AppLocalizations.of(context).subtitleQna,
                             style: TextStyle(color: kText2, fontSize: 14.0),
@@ -428,6 +455,7 @@ class _BodyHomeState extends State<BodyHome> {
                     ),
                   ),
                 ),
+                // menempatkan pisisi bottom ditengah tengah item
                 Positioned(
                   right: 0.0,
                   top: 1.0,

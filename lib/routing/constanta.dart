@@ -1,3 +1,4 @@
+// kumpulan variabel routing
 const splash = '/';
 const home = '/home';
 const login = '/login';
