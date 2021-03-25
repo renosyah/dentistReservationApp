@@ -39,9 +39,13 @@ class _QnaScreenState extends State<QnaScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
+          // menampilkan judul halaman tanya jawab
           AppLocalizations.of(context).navBarTextQna,
           style: TextStyle(
-              color: kPrimary, fontSize: 18.0, fontWeight: FontWeight.bold),
+              // memberi style warna ukuran dan ketebelan judul halaman
+              color: kPrimary,
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold),
         ),
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -54,6 +58,7 @@ class _QnaScreenState extends State<QnaScreen> {
               }
               return SingleChildScrollView(
                 child: Padding(
+                  // memberi jarak dikiri dan kanan elemen
                   padding: EdgeInsets.symmetric(
                       horizontal: getProportionateScreenWidth(24.0)),
                   child: Column(
@@ -92,60 +97,79 @@ class BuildQnaItem extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return Padding(
+              // memri jarak disemua sisi elemen
               padding: EdgeInsets.all(getProportionateScreenWidth(36.0)),
               child: Container(
-                width: double.infinity,
+                width:
+                    double.infinity, // panjang elemen mengikuti panjang device
                 decoration: BoxDecoration(
-                    color: kWhite,
+                    color: kWhite, // memberi warna text
                     borderRadius: BorderRadius.circular(
+                        // membuat lengkungan pada elemen
                         getProportionateScreenWidth(24.0)),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          blurRadius: 8,
-                          spreadRadius: 4,
-                          offset: Offset(0.0, 0.0),
-                          color: kText1.withOpacity(0.1))
+                          blurRadius: 8, // memberi blur pada shadow
+                          spreadRadius: 4, // memberi lebar blur pada shadow
+                          offset: Offset(0.0,
+                              0.0), // memberi arah x dan y blur pada shadow
+                          color:
+                              kText1.withOpacity(0.1)) // memberi warna shadow
                     ]),
                 child: Padding(
+                  // memri jarak disemua sisi elemen
                   padding: EdgeInsets.all(getProportionateScreenWidth(24.0)),
                   child: SingleChildScrollView(
                     child: Column(
+                      // menampilkan elemen secara vertical atau kebawah
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // menampilkan text tanya jawab
                         Text(AppLocalizations.of(context).ask,
                             style: TextStyle(
-                                fontSize: 14.0,
-                                color: kText2,
-                                decoration: TextDecoration.none)),
+                                fontSize: 14.0, // memberi ukuran text
+                                color: kText2, // memberi warna text
+                                decoration: TextDecoration
+                                    .none)), // memberi style none atau tidak ada
+                        // membuat jarak antar elemen emnggunakan sizebox
                         SizedBox(height: getProportionateScreenWidth(8.0)),
                         // menampilkan pertanyaan
                         Text(
+                          // menampilkan pertanyaan
                           questionAndAnswer.question,
                           style: TextStyle(
-                              color: kText1,
-                              fontSize: 18.0,
-                              decoration: TextDecoration.none,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.bold),
+                              color: kText1, // memberi warna text
+                              fontSize: 18.0, // memberi  ukuran text
+                              decoration: TextDecoration
+                                  .none, // memberi dekorasi text tidak ada
+                              fontFamily: 'Roboto', // memberi jenis font
+                              fontWeight:
+                                  FontWeight.bold), // memberi ketebalan text
                         ),
+                        // membuat jarak antar elemen menggunakan sizebox
                         SizedBox(
                           height: getProportionateScreenHeight(24.0),
                         ),
+                        // menampilkan jawaban
                         Text(AppLocalizations.of(context).textAnswer,
                             style: TextStyle(
-                                fontSize: 14.0,
-                                color: kText2,
-                                decoration: TextDecoration.none)),
+                                fontSize: 14.0, // memberi ukuran text
+                                color: kText2, // memberi warna text
+                                decoration: TextDecoration
+                                    .none)), // memberi dekorasi text tidak ada
+                        // membuat jarak antar elemen menggunakan sizebox
                         SizedBox(height: getProportionateScreenWidth(8.0)),
-                        // menampilkan jawaban
                         Text(
+                          // menampilkan jawaban
                           questionAndAnswer.answer,
                           style: TextStyle(
-                              color: kText1,
-                              fontFamily: 'Roboto',
-                              decoration: TextDecoration.none,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold),
+                              color: kText1, // memberi warna text
+                              fontFamily: 'Roboto', // memberi jenis font
+                              decoration: TextDecoration
+                                  .none, // memberi dekorasi text tidak ada
+                              fontSize: 18.0, // memberi ukuran text
+                              fontWeight:
+                                  FontWeight.bold), // memberi ketebalan text
                         ),
                       ],
                     ),
@@ -156,18 +180,19 @@ class BuildQnaItem extends StatelessWidget {
           }),
       // item tanya jawab
       child: Container(
-        width: double.infinity,
+        width: double.infinity, // panjang elemen mengikuti panjang device
         margin: EdgeInsets.only(top: getProportionateScreenWidth(24.0)),
         decoration: BoxDecoration(
-            color: kWhite,
+            color: kWhite, // memberi warna elemen
+            // membuat lengkungan pada elemen
             borderRadius:
                 BorderRadius.circular(getProportionateScreenWidth(24.0)),
             boxShadow: <BoxShadow>[
               BoxShadow(
-                  blurRadius: 8,
-                  spreadRadius: 4,
-                  offset: Offset(0.0, 0.0),
-                  color: kText1.withOpacity(0.1))
+                  blurRadius: 8,// memberi blur pada shadow
+                  spreadRadius: 4,// memberi lebar blur pada shadow
+                  offset: Offset(0.0, 0.0),// memberi arah x dan y blur pada shadow
+                  color: kText1.withOpacity(0.1))// memberi warna shadow
             ]),
         child: Padding(
           padding: EdgeInsets.all(getProportionateScreenWidth(24.0)),
@@ -183,8 +208,12 @@ class BuildQnaItem extends StatelessWidget {
                 // jika lebih dari 2 baris makan ditampilkan titik titik
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                    color: kText1, fontWeight: FontWeight.bold, fontSize: 18.0),
+                    // memberi style warna ukuran dan ketebalan pada text
+                    color: kText1,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0),
               ),
+              // membuat jarak antar elemen menggunakan sizebox
               SizedBox(
                 height: getProportionateScreenHeight(4.0),
               ),
@@ -194,13 +223,20 @@ class BuildQnaItem extends StatelessWidget {
                   // jika lebih dari 2 baris makan ditampilkan titik titik
                   overflow: TextOverflow.ellipsis,
                   text: TextSpan(
+                      // menampilkan text jawaban
                       text: "${AppLocalizations.of(context).answer}",
-                      style: TextStyle(color: kPrimary, fontSize: 14.0),
+                      style: TextStyle(
+                          color: kPrimary,
+                          fontSize: 14.0), // memberi warna dan ukruan pada text
                       children: [
                         TextSpan(
                             text:
+                                // menampilkan jawaban jika kosong yakni menunggu
                                 "${questionAndAnswer.answer.isEmpty ? AppLocalizations.of(context).pending : questionAndAnswer.answer}",
-                            style: TextStyle(color: kPending, fontSize: 14.0))
+                            style: TextStyle(
+                                color: kPending,
+                                fontSize:
+                                    14.0)) // memberi warna dan ukuran pada text
                       ]))
             ],
           ),
@@ -218,47 +254,62 @@ class EmptyQna extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // menampilkan elemen secara vertical
     return Column(
       children: [
+        // membuat jarak antar elemen menggunakan sizebox
         SizedBox(
           height: getProportionateScreenWidth(112.0),
         ),
-        // menampilkan ilustrasi
+        // menmpatkan ilustrasi ditengah
         Center(
+            // menampilkan ilustrasi
             child: SvgPicture.asset(
           "assets/illustrations/emptyqna.svg",
           width: getProportionateScreenWidth(140),
         )),
+        // membuat jarak antar elemen menggunakan sizebox
         SizedBox(
           height: getProportionateScreenHeight(56.0),
         ),
-        // menampilkan judul halaman kosong
+        // menampatkan judul ditengah
         Center(
             child: Text(
+          // menampilkan judul halaman kosong
           AppLocalizations.of(context).emptyQnaTitle,
           style: TextStyle(
-              color: kText1, fontWeight: FontWeight.bold, fontSize: 18.0),
+              // memberi style warna ketebalan dan ukuran text
+              color: kText1,
+              fontWeight: FontWeight.bold,
+              fontSize: 18.0),
         )),
+        // membuat jarak antar elemen menggunakan sizebox
         SizedBox(
           height: getProportionateScreenHeight(24.0),
         ),
         // menampilkan subjudul halaman kosong
         Padding(
+          // membuat jarak disisi kiri dan kanan elemen
           padding: EdgeInsets.symmetric(
               horizontal: getProportionateScreenWidth(36.0)),
           child: Center(
             child: RichText(
+                // menempatkan subtitle ditengah
                 textAlign: TextAlign.center,
                 text: TextSpan(
+                    // menampilkan subtitle
                     text: AppLocalizations.of(context).emptyQnaSubtitle,
+                    // memberi style warna dan ukuran pada text
                     style: TextStyle(fontSize: 16.0, color: kText2),
                     children: [
                       TextSpan(
+                          // menampilkan text beranda
                           text: AppLocalizations.of(context).navBarTextHome,
                           style: TextStyle(
-                              fontSize: 16.0,
-                              color: kPrimary,
-                              fontWeight: FontWeight.bold))
+                              fontSize: 16.0, // memberi ukuran text
+                              color: kPrimary, // memberi  warna text
+                              fontWeight:
+                                  FontWeight.bold)) // memberi ketebalan text
                     ])),
           ),
         )

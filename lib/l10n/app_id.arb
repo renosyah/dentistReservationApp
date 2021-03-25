@@ -78,5 +78,10 @@
     "aboutApp" :  "Tentang Aplikasi",
     "aboutAppDesc" :  "Ketahui tentang aplikasi ini",
     "helpApp" :  "Bantuan",
-    "helpAppDesc" :  "Tata cara menggunakan aplikasi ini"
+    "helpAppDesc" :  "Tata cara menggunakan aplikasi ini",
+    "createReservationApp" :  "Buat Reservasi",
+    "chooseDate" :  "Pilih Tangggal",
+    "chooseTime" :  "Pilih Waktu",
+    "promoTextAppBar" :  "Promo",
+    "claim" :  "Klaim"
 }

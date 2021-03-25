@@ -278,5 +278,25 @@
     "helpAppDesc" :  "Procedure for using this application",
     "@helpAppDesc": {
         "description": ""
+    },
+    "createReservationApp" :  "Create Reservation",
+    "@createReservationApp": {
+        "description": ""
+    },
+    "chooseDate" :  "Choose Date",
+    "@chooseDate": {
+        "description": ""
+    },
+    "chooseTime" :  "Choose Time",
+    "@chooseTime": {
+        "description": ""
+    },
+    "promoTextAppBar" :  "Promo",
+    "@promoTextAppBar": {
+        "description": ""
+    },
+    "claim" :  "Claim",
+    "@claim": {
+        "description": ""
     }
 }
