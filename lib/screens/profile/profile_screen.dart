@@ -11,7 +11,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   User user;
   Future<void> getUserData() async {
     User userData = FirebaseAuth.instance.currentUser;
@@ -30,6 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+        // appbar berserta judul
         appBar: AppBar(
           title: Text(
             AppLocalizations.of(context).navBarTextProfile,
@@ -45,6 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: getProportionateScreenHeight(24.0),
               ),
+              // menampilkan logo atau gambar ditengah screen
               Align(
                 alignment: Alignment.center,
                 child: Image.asset(
@@ -56,6 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: getProportionateScreenHeight(36.0),
               ),
+              // menampilkan nama
               Text(
                 "${user.displayName}",
                 style: TextStyle(
@@ -64,6 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: getProportionateScreenHeight(8.0),
               ),
+              // menampilkan email
               Text(
                 "${user.email}",
                 style: TextStyle(color: kText2, fontSize: 18.0),
@@ -71,6 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: getProportionateScreenHeight(36.0),
               ),
+              // menu ke halaman tentang aplikasi
               GestureDetector(
                 onTap: () => Navigator.pushNamed(context, about),
                 child: Container(
@@ -115,6 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: getProportionateScreenHeight(24.0),
               ),
+              // menu ke halaman bantuan atau cara menggunakan aplikasi
               GestureDetector(
                 onTap: () => Navigator.pushNamed(context, help),
                 child: Container(
@@ -159,6 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: getProportionateScreenWidth(56.0),
               ),
+              // button logout
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(24.0)),
@@ -167,13 +173,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: double.infinity,
                       height: getProportionateScreenHeight(72.0)),
                   child: ElevatedButton(
-                    onPressed: ()  {
-
-                        WidgetsBinding.instance.addPostFrameCallback((_) async {
-                          await FirebaseAuth.instance.signOut();
-                          Navigator.pushReplacementNamed(context, login);
+                    onPressed: () {
+                      WidgetsBinding.instance.addPostFrameCallback((_) async {
+                        await FirebaseAuth.instance.signOut();
+                        Navigator.pushReplacementNamed(context, login);
                       });
-
                     },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(kPrimary),

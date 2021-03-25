@@ -12,8 +12,7 @@ class ReservasiScreen extends StatefulWidget {
   _ReservasiScreenState createState() => _ReservasiScreenState();
 }
 
-class _ReservasiScreenState  extends State<ReservasiScreen> {
-
+class _ReservasiScreenState extends State<ReservasiScreen> {
   User user;
   Stream<QuerySnapshot> _reservation;
 
@@ -24,12 +23,11 @@ class _ReservasiScreenState  extends State<ReservasiScreen> {
     });
   }
 
-
-  void getReservationData()  {
+  void getReservationData() {
     _reservation = FirebaseFirestore.instance
         .collection("reservation")
         .where('user_id', isEqualTo: user.uid)
-        .where('time', isGreaterThan : DateTime.now())
+        .where('time', isGreaterThan: DateTime.now())
         .limit(1)
         .snapshots();
   }
@@ -55,112 +53,118 @@ class _ReservasiScreenState  extends State<ReservasiScreen> {
       body: StreamBuilder<QuerySnapshot>(
           stream: _reservation,
           builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data.docs.isNotEmpty){
-                Reservation reservation = new Reservation();
-                for (DocumentSnapshot snap in snapshot.data.docs) {
-                  reservation = Reservation.fromJson(snap.data());
-                }
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.all(getProportionateScreenWidth(24.0)),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: kWhite,
-                          borderRadius: BorderRadius.circular(
-                              getProportionateScreenWidth(24.0)),
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                                blurRadius: 8,
-                                spreadRadius: 4,
-                                offset: Offset(0.0, 0.0),
-                                color: kText1.withOpacity(0.1))
-                          ]),
-                      child: Padding(
-                        padding: EdgeInsets.all(getProportionateScreenWidth(24.0)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(AppLocalizations.of(context).nameHint,
-                                style: TextStyle(fontSize: 14.0, color: kText2)),
-                            SizedBox(height: getProportionateScreenWidth(8.0)),
-                            Text(
-                              user.displayName,
+            if (snapshot.hasData && snapshot.data.docs.isNotEmpty) {
+              Reservation reservation = new Reservation();
+              for (DocumentSnapshot snap in snapshot.data.docs) {
+                reservation = Reservation.fromJson(snap.data());
+              }
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(getProportionateScreenWidth(24.0)),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: kWhite,
+                        borderRadius: BorderRadius.circular(
+                            getProportionateScreenWidth(24.0)),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              blurRadius: 8,
+                              spreadRadius: 4,
+                              offset: Offset(0.0, 0.0),
+                              color: kText1.withOpacity(0.1))
+                        ]),
+                    child: Padding(
+                      padding:
+                          EdgeInsets.all(getProportionateScreenWidth(24.0)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(AppLocalizations.of(context).nameHint,
+                              style: TextStyle(fontSize: 14.0, color: kText2)),
+                          SizedBox(height: getProportionateScreenWidth(8.0)),
+                          // menampilkan nama
+                          Text(
+                            user.displayName,
+                            style: TextStyle(
+                                color: kText1,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(24.0),
+                          ),
+                          Text(AppLocalizations.of(context).emailHint,
+                              style: TextStyle(fontSize: 14.0, color: kText2)),
+                          SizedBox(height: getProportionateScreenWidth(8.0)),
+                          // menampilkan email
+                          Text(
+                            user.email,
+                            style: TextStyle(
+                                color: kText1,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(24.0),
+                          ),
+                          Text(AppLocalizations.of(context).time,
+                              style: TextStyle(fontSize: 14.0, color: kText2)),
+                          SizedBox(height: getProportionateScreenWidth(8.0)),
+                          // menampilkan waktu reservasi
+                          Text(
+                            reservation.time.toString(),
+                            style: TextStyle(
+                                color: kText1,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(24.0),
+                          ),
+                          Text(AppLocalizations.of(context).queueNumber,
+                              style: TextStyle(fontSize: 14.0, color: kText2)),
+                          SizedBox(height: getProportionateScreenWidth(56.0)),
+                          // menampilkan nomor urut
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              reservation.queueNumber.toString(),
+                              textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: kText1,
-                                  fontSize: 18.0,
+                                  color: kPrimary,
+                                  fontSize: 56.0,
                                   fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(
-                              height: getProportionateScreenHeight(24.0),
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(56.0),
+                          ),
+                          // menampilkan catatan reservasi
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              AppLocalizations.of(context).note,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: kText2, fontSize: 12.0),
                             ),
-                            Text(AppLocalizations.of(context).emailHint,
-                                style: TextStyle(fontSize: 14.0, color: kText2)),
-                            SizedBox(height: getProportionateScreenWidth(8.0)),
-                            Text(
-                              user.email,
-                              style: TextStyle(
-                                  color: kText1,
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: getProportionateScreenHeight(24.0),
-                            ),
-                            Text(AppLocalizations.of(context).time,
-                                style: TextStyle(fontSize: 14.0, color: kText2)),
-                            SizedBox(height: getProportionateScreenWidth(8.0)),
-                            Text(
-                              reservation.time.toString(),
-                              style: TextStyle(
-                                  color: kText1,
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: getProportionateScreenHeight(24.0),
-                            ),
-                            Text(AppLocalizations.of(context).queueNumber,
-                                style: TextStyle(fontSize: 14.0, color: kText2)),
-                            SizedBox(height: getProportionateScreenWidth(56.0)),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                reservation.queueNumber.toString(),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: kPrimary,
-                                    fontSize: 56.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            SizedBox(
-                              height: getProportionateScreenHeight(56.0),
-                            ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                AppLocalizations.of(context).note,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: kText2, fontSize: 12.0),
-                              ),
-                            )
-                          ],
-                        ),
+                          )
+                        ],
                       ),
                     ),
                   ),
-                );
-            } else if (snapshot.hasData && snapshot.data.docs.isEmpty){
+                ),
+              );
+            } else if (snapshot.hasData && snapshot.data.docs.isEmpty) {
+              // jika data kosong maka tampilkan halaman ini
               return EmptyReservasi();
             }
 
             return Center(
               child: CircularProgressIndicator(),
             );
-         }
-      ),
+          }),
     );
   }
 }
@@ -177,23 +181,26 @@ class EmptyReservasi extends StatelessWidget {
         SizedBox(
           height: getProportionateScreenWidth(112.0),
         ),
+        // menampilkan ilustrasi
         Center(
             child: SvgPicture.asset(
-              "assets/illustrations/emptyreservasi.svg",
-              width: getProportionateScreenWidth(140),
-            )),
+          "assets/illustrations/emptyreservasi.svg",
+          width: getProportionateScreenWidth(140),
+        )),
         SizedBox(
           height: getProportionateScreenHeight(56.0),
         ),
+        // menampilkan judul halaman kosong
         Center(
             child: Text(
-              AppLocalizations.of(context).emptyReservasiTitle,
-              style: TextStyle(
-                  color: kText1, fontWeight: FontWeight.bold, fontSize: 18.0),
-            )),
+          AppLocalizations.of(context).emptyReservasiTitle,
+          style: TextStyle(
+              color: kText1, fontWeight: FontWeight.bold, fontSize: 18.0),
+        )),
         SizedBox(
           height: getProportionateScreenHeight(24.0),
         ),
+        // menampilkan subjudul halaman kosong
         Padding(
           padding: EdgeInsets.symmetric(
               horizontal: getProportionateScreenWidth(36.0)),

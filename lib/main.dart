@@ -19,15 +19,15 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
-        statusBarColor: kBackground)
-    );
+        statusBarColor: kBackground));
     return MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         debugShowCheckedModeBanner: false,
         title: 'Dentist Reservation',
         theme: theme(),
-        initialRoute: splash,
-        onGenerateRoute: route.Routes.generateRoute);
+        initialRoute: splash, //  halaman yang pertama kali muncul
+        onGenerateRoute: route.Routes
+            .generateRoute); // inisialisasi route untuk navigasi di semua halaman
   }
 }

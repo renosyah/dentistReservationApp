@@ -9,6 +9,7 @@ class DetailTipsScreen extends StatelessWidget {
   final String image;
   final List<DetailTipsAndTrick> detailTipAndTrickList;
 
+  // konstruktor dari class DetailTipsScreen
   const DetailTipsScreen(
       {Key key, this.title, this.image, this.detailTipAndTrickList})
       : super(key: key);
@@ -16,6 +17,7 @@ class DetailTipsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appbar beserta judul
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context).tipsTitle,
@@ -24,15 +26,18 @@ class DetailTipsScreen extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
+        // menggunakan column untuk menampilkan data list secara vertical
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: EdgeInsets.all(getProportionateScreenWidth(24.0)),
+              // membuat gambar memiliki lengkungan di empat sisi
               child: ClipRRect(
                 borderRadius:
                     BorderRadius.circular(getProportionateScreenWidth(24.0)),
                 child: Image.asset(
+                  // gambar
                   image,
                   width: double.infinity,
                   height: getProportionateScreenWidth(200.0),
@@ -52,6 +57,7 @@ class DetailTipsScreen extends StatelessWidget {
             SizedBox(
               height: getProportionateScreenWidth(24.0),
             ),
+            // list untuk detail tips dan trik
             ...List.generate(
                 detailTipAndTrickList.length,
                 (index) => Column(
@@ -88,11 +94,13 @@ class DetailTipsScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   horizontal: getProportionateScreenWidth(24.0)),
               child: Divider(
+                // garis pembatas
                 color: kIndicator,
                 thickness: 0.5,
                 height: 1,
               ),
             ),
+            // pemilik aplikasi beserta informasi kepemilikan tips dan trik diatas
             Padding(
               padding: EdgeInsets.all(getProportionateScreenWidth(24.0)),
               child: Align(

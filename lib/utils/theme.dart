@@ -2,6 +2,7 @@ import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
+// pengaturan tema untuk aplikasi secara keseluruhan
 ThemeData theme() {
   return ThemeData(
     scaffoldBackgroundColor: kBackground,
