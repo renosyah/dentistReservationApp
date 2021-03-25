@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:reservasiui/utils/colors.dart';
 import 'package:reservasiui/utils/size_config.dart';
-import 'package:reservasiui/utils/strings.dart';
 
 class CreateReservationScreen extends StatefulWidget {
   @override
@@ -50,7 +49,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
               focusNode: AlwaysDisabledFocusNode(),
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
-                hintText: chooseDate,
+                hintText: AppLocalizations.of(context).chooseDate,
                 filled: true,
                 fillColor: kBackgroundTextField,
                 suffixIcon: Icon(Icons.calendar_today_rounded),

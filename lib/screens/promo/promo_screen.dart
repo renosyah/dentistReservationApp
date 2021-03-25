@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reservasiui/utils/colors.dart';
 import 'package:reservasiui/utils/size_config.dart';
-import 'package:reservasiui/utils/strings.dart';
 
 class PromoScreen extends StatefulWidget {
   @override
