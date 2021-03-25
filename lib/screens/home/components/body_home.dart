@@ -26,9 +26,9 @@ class _BodyHomeState extends State<BodyHome> {
 
   _BodyHomeState({this.onTap});
 
-  carousel.CarouselController _carouselController = carousel.CarouselController();
+  carousel.CarouselController _carouselController =
+      carousel.CarouselController();
   TextEditingController _controllerQuestion = TextEditingController();
-
 
   Future<void> getUserData() async {
     User userData = FirebaseAuth.instance.currentUser;
@@ -38,56 +38,64 @@ class _BodyHomeState extends State<BodyHome> {
   }
 
   void _checkCurrentQueue() async {
-
     var query = await FirebaseFirestore.instance
         .collection("reservation")
         .where('user_id', isEqualTo: user.uid)
-        .where('time', isGreaterThan : DateTime.now())
+        .where('time', isGreaterThan: DateTime.now())
         .limit(1)
         .get();
 
     if (query.docs.isNotEmpty) return;
     _createQueue();
-
   }
 
-  void _createQueue(){
-
+  void _createQueue() {
     FirebaseFirestore.instance
-      .collection("counter")
-      .limit(1)
-      .get().then((value){
-        if (value.docs.isNotEmpty && value.docs[0] != null){
-            int counter = value.docs[0].data()['counter_id'];
-            DateTime time = value.docs[0].data()['time'].toDate();
-            DateTime now = DateTime.now();
+        .collection("counter")
+        .limit(1)
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty && value.docs[0] != null) {
+        int counter = value.docs[0].data()['counter_id'];
+        DateTime time = value.docs[0].data()['time'].toDate();
+        DateTime now = DateTime.now();
 
-            if (time.day != now.day && time.month == now.month && time.year == now.year) time = now;
+        if (time.day != now.day &&
+            time.month == now.month &&
+            time.year == now.year) time = now;
 
-            FirebaseFirestore.instance
-                .collection("reservation")
-                .doc()
-                .set(new Reservation(userId : user.uid, queueNumber: counter,name: user.displayName,time: time).toJson());
+        FirebaseFirestore.instance.collection("reservation").doc().set(
+            new Reservation(
+                    userId: user.uid,
+                    queueNumber: counter,
+                    name: user.displayName,
+                    time: time)
+                .toJson());
 
-            FirebaseFirestore.instance
-                .collection("counter")
-                .doc(value.docs[0].id)
-                .set(new Counter(counterId: counter + 1,time: time.add(new Duration(minutes: 30))).toJson());
-        }
+        FirebaseFirestore.instance
+            .collection("counter")
+            .doc(value.docs[0].id)
+            .set(new Counter(
+                    counterId: counter + 1,
+                    time: time.add(new Duration(minutes: 30)))
+                .toJson());
+      }
     });
-
   }
 
-  void _sendQuestion(){
-    if (_controllerQuestion.text.toString().trim().isEmpty){
+  void _sendQuestion() {
+    if (_controllerQuestion.text.toString().trim().isEmpty) {
       print("question must not be empty");
       return;
     }
 
     // add to document qna
-    FirebaseFirestore.instance
-        .collection("qna")
-        .add(new QuestionAndAnswer(userId:user.uid, question: _controllerQuestion.text.toString(), answer: "", time: DateTime.now()).toJson());
+    FirebaseFirestore.instance.collection("qna").add(new QuestionAndAnswer(
+            userId: user.uid,
+            question: _controllerQuestion.text.toString(),
+            answer: "",
+            time: DateTime.now())
+        .toJson());
 
     // question and answer
     Navigator.pop(context);
@@ -102,7 +110,8 @@ class _BodyHomeState extends State<BodyHome> {
 
   @override
   Widget build(BuildContext context) {
-    List<TipsAndTrick> _tipsAndTrick = new TipsAndTrick().getListTrickAndTips(context);
+    List<TipsAndTrick> _tipsAndTrick =
+        new TipsAndTrick().getListTrickAndTips(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -111,6 +120,14 @@ class _BodyHomeState extends State<BodyHome> {
           style: TextStyle(
               color: kPrimary, fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: getProportionateScreenWidth(8.0)),
+            child: IconButton(
+                icon: Icon(Icons.local_play_rounded),
+                onPressed: () => Navigator.pushNamed(context, promo)),
+          )
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,7 +208,7 @@ class _BodyHomeState extends State<BodyHome> {
                 horizontal: getProportionateScreenWidth(24.0)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: _tipsAndTrick .map((data) {
+              children: _tipsAndTrick.map((data) {
                 int index = _tipsAndTrick.lastIndexOf(data);
                 return AnimatedContainer(
                   duration: Duration(milliseconds: 400),
@@ -225,7 +242,9 @@ class _BodyHomeState extends State<BodyHome> {
             height: getProportionateScreenHeight(16.0),
           ),
           GestureDetector(
-            onTap: () { Navigator.pushNamed(context, createReservation); },
+            onTap: () {
+              Navigator.pushNamed(context, createReservation);
+            },
             child: Stack(
               children: [
                 Padding(
@@ -319,10 +338,11 @@ class _BodyHomeState extends State<BodyHome> {
                               ),
                               Form(
                                   child: TextFormField(
-                                    controller: _controllerQuestion,
+                                controller: _controllerQuestion,
                                 keyboardType: TextInputType.name,
                                 decoration: InputDecoration(
-                                  hintText: AppLocalizations.of(context).askingHint,
+                                  hintText:
+                                      AppLocalizations.of(context).askingHint,
                                   filled: true,
                                   fillColor: kBackgroundTextField,
                                   contentPadding: EdgeInsets.symmetric(
@@ -345,7 +365,9 @@ class _BodyHomeState extends State<BodyHome> {
                                     width: double.infinity,
                                     height: getProportionateScreenHeight(72.0)),
                                 child: ElevatedButton(
-                                  onPressed: () { this._sendQuestion(); },
+                                  onPressed: () {
+                                    this._sendQuestion();
+                                  },
                                   style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(kPrimary),

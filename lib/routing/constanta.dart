@@ -5,3 +5,4 @@ const register = '/register';
 const about = '/about';
 const help = '/help';
 const createReservation = "/create";
+const promo = "/promo";

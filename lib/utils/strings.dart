@@ -103,3 +103,6 @@ const helpAppDesc = "Tata cara menggunakan aplikasi ini";
 const createReservationApp = "Buat Reservasi";
 const chooseDate = "Pilih Tanggal";
 const chooseTime = "Pilih Waktu";
+
+const promoTextAppBar = "Promo";
+const claim = "Klaim";

@@ -22,6 +22,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => HelpScreen());
       case createReservation:
         return MaterialPageRoute(builder: (_) => CreateReservationScreen());
+      case promo:
+        return MaterialPageRoute(builder: (_) => PromoScreen());
       default:
         return MaterialPageRoute(builder: (_) => SplashScreen());
     }
