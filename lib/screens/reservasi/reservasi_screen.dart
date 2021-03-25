@@ -28,6 +28,7 @@ class _ReservasiScreenState extends State<ReservasiScreen> {
         .collection("reservation")
         .where('user_id', isEqualTo: user.uid)
         .where('time', isGreaterThan: DateTime.now())
+        .orderBy('time', descending: false)
         .limit(1)
         .snapshots();
   }

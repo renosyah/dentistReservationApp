@@ -3,7 +3,9 @@ import 'package:dentistReservationApp/screens/about/about_screen.dart';
 import 'package:dentistReservationApp/screens/help/help_screen.dart';
 import 'package:dentistReservationApp/screens/home/home_screen.dart';
 import 'package:dentistReservationApp/screens/login/login_screen.dart';
+import 'package:dentistReservationApp/screens/promo/promo_screen.dart';
 import 'package:dentistReservationApp/screens/register/register_screen.dart';
+import 'package:dentistReservationApp/screens/reservasi/create_reservation/create_reservation_screen.dart';
 import 'package:dentistReservationApp/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,10 @@
+import 'package:dentistReservationApp/models/Promo.dart';
+import 'package:dentistReservationApp/utils/colors.dart';
+import 'package:dentistReservationApp/utils/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:reservasiui/utils/colors.dart';
-import 'package:reservasiui/utils/size_config.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PromoScreen extends StatefulWidget {
   @override
@@ -8,6 +12,75 @@ class PromoScreen extends StatefulWidget {
 }
 
 class _PromoScreenState extends State<PromoScreen> {
+  User user;
+  Stream<QuerySnapshot> _promo;
+
+  Future<void> getUserData() async {
+    User userData = FirebaseAuth.instance.currentUser;
+    setState(() {
+      user = userData;
+    });
+  }
+
+  void getPromoData() {
+    _promo = FirebaseFirestore.instance
+        .collection("promo")
+        .snapshots();
+  }
+
+  void claimPromoData(String id) async {
+    var query = await FirebaseFirestore.instance
+        .collection("promo")
+        .doc(id)
+        .get();
+
+    Promo promo = Promo.fromJson(query.data());
+
+    promo.claimBy.add(user.uid);
+    await FirebaseFirestore.instance
+        .collection("promo")
+        .doc(id)
+        .set(promo.toJson()
+    );
+
+    _showDialogSuccessClaim(promo);
+  }
+
+
+  Future<void> _showDialogSuccessClaim(Promo p) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context).alert),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text("${p.name} ${AppLocalizations.of(context).promoAdded}"),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+    getPromoData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,35 +96,52 @@ class _PromoScreenState extends State<PromoScreen> {
               fontWeight: FontWeight.bold),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          // memberi jarak disisi kiri dan kanan eleme
-          padding: EdgeInsets.symmetric(
-              horizontal: getProportionateScreenWidth(24.0)),
-          // menampilkan elemen secara vertical
-          child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.center, // menempatkan elemen ditengah layar
-            children: [
+      body: StreamBuilder<QuerySnapshot>(
+          stream: _promo,
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data.docs.isNotEmpty) {
+              List<Promo> list = new List<Promo>();
+              for (DocumentSnapshot snap in snapshot.data.docs) {
+                Promo p = Promo.fromJson(snap.data());
+                p.id = snap.id;
+                list.add(p);
+              }
               // menggunakan list untuk menampilkan item promo
-              ...List.generate(2, (index) => BuildPromoItem()),
-              // memberi jarak menggunakan sizebox antar elemen
-              SizedBox(
-                height: getProportionateScreenWidth(24.0),
-              )
-            ],
-          ),
-        ),
-      ),
+              return 	SingleChildScrollView(
+                child: Padding(
+                  // memberi jarak disisi kiri dan kanan eleme
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(24.0)),
+                  // menampilkan elemen secara vertical
+                  child: Column(
+                    crossAxisAlignment:
+                    CrossAxisAlignment.center, // menempatkan elemen ditengah layar
+                    children: [
+                      ...list.map((e) => BuildPromoItem(uid : user.uid, promo: e, claim: () { claimPromoData(e.id); },)),
+                      // memberi jarak menggunakan sizebox antar elemen
+                      SizedBox(
+                        height: getProportionateScreenWidth(24.0),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          })
     );
   }
 }
 
 // item untuk build promo agar bisa di looping
 class BuildPromoItem extends StatelessWidget {
-  const BuildPromoItem({
-    Key key,
-  }) : super(key: key);
+
+  String uid;
+  Promo promo;
+  Function claim;
+  BuildPromoItem({this.uid, this.promo,this.claim});
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +179,7 @@ class BuildPromoItem extends StatelessWidget {
                   // menampilkan judul promo
                   Text(
                     // menampilkan judul promo
-                    "Voucher Rp. 20.000",
+                    this.promo.name,
                     maxLines: 2, // maksimal 2 baris
                     overflow: TextOverflow
                         .ellipsis, // lebi dari 2 baris ditampilkan dalam bentuk titik titik
@@ -106,7 +196,7 @@ class BuildPromoItem extends StatelessWidget {
                   // menampilkan subtitle dari promo
                   Text(
                     // menampilkan deskripsi promo
-                    "Spesial Promo Hari Ulang Tahun Klinik D'Gigi",
+                    this.promo.description,
                     // memberi style ukuran dan warna pada text
                     style: TextStyle(fontSize: 14.0, color: kText2),
                   )
@@ -124,8 +214,24 @@ class BuildPromoItem extends StatelessWidget {
                       96.0), // menentukan panjang button klaim
                   height: getProportionateScreenHeight(
                       44.0)), // menentukan tinggi button klaim
-              child: ElevatedButton(
-                onPressed: () {},
+              child: promo.claimBy.contains(uid) || (promo.claimBy.length >= 3) ? ElevatedButton(
+                onPressed: (){ },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        kIndicator), // memberi  warna button
+                    elevation: MaterialStateProperty.all(
+                        0)), // memberi shadow pada button
+                child: Text(
+                  // menampilkan text klaim
+                  AppLocalizations.of(context).claim,
+                  style: TextStyle(
+                    color: kTextHint, // memberi warna pada text
+                    fontSize: 14.0, // memberi ukuran pada text
+                    fontWeight: FontWeight.bold, // memberi ketebalan pada text
+                  ),
+                ),
+              ) : ElevatedButton(
+                onPressed: claim,
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
                         kPrimary), // memberi  warna button

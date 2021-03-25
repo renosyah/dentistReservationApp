@@ -83,5 +83,9 @@
     "chooseDate" :  "Pilih Tangggal",
     "chooseTime" :  "Pilih Waktu",
     "promoTextAppBar" :  "Promo",
-    "claim" :  "Klaim"
+    "claim" :  "Klaim",
+    "alert" :  "Perhatian",
+    "failedCreateReservationText" : "Gagal membuat reservasi pada : ",
+    "titlePromoAdded" : "Promo di Klaim",
+    "promoAdded" : "Telah di claim"
 }

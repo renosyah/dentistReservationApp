@@ -1,22 +1,120 @@
+import 'package:dentistReservationApp/models/Counter.dart';
+import 'package:dentistReservationApp/models/Reservation.dart';
+import 'package:dentistReservationApp/utils/colors.dart';
+import 'package:dentistReservationApp/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CreateReservationScreen extends StatefulWidget {
   @override
-  _CreateReservationScreenState createState() =>
-      _CreateReservationScreenState();
+  _CreateReservationScreenState createState() => _CreateReservationScreenState();
 }
 
 class _CreateReservationScreenState extends State<CreateReservationScreen> {
+
   // inisialisasi type data datetime
   DateTime _selectedDate;
+
   // inisialisasi type timeofday
   TimeOfDay _selectedTime;
 
   // inisialisasi controller tanggal
   TextEditingController _textDateController = TextEditingController();
+
   // inisialisasi controller waktu
   TextEditingController _textTimeController = TextEditingController();
+
+  User user;
+  Future<void> getUserData() async {
+    User userData = FirebaseAuth.instance.currentUser;
+    setState(() {
+      user = userData;
+    });
+  }
+
+  void _checkCurrentReservation() async {
+
+    if (this._selectedDate == null || this._selectedTime == null) return;
+
+    DateTime reservationTime = new DateTime(
+        this._selectedDate.year,this._selectedDate.month,this._selectedDate.day,
+        this._selectedTime.hour,this._selectedTime.minute
+    );
+
+    var query = await FirebaseFirestore.instance
+        .collection("reservation")
+        .where('time',isEqualTo: reservationTime)
+        .limit(1)
+        .get();
+
+    if (query.docs.isNotEmpty) {
+
+      _showDialogFailedCreateReservation();
+      return;
+    }
+
+    _createReservation(reservationTime);
+  }
+
+  void _createReservation(DateTime reservationTime) async {
+
+    var query = await FirebaseFirestore.instance
+        .collection("counter")
+        .limit(1)
+        .get();
+
+    if (query.docs.isNotEmpty && query.docs[0] != null) {
+      int counter = query.docs[0].data()['counter_id'];
+
+      FirebaseFirestore.instance.collection("reservation").doc().set(
+          new Reservation(userId: user.uid, queueNumber: counter, name: user.displayName, time: reservationTime).toJson()
+      );
+
+      FirebaseFirestore.instance
+        .collection("counter")
+        .doc(query.docs[0].id)
+        .set(new Counter(counterId: counter + 1).toJson()
+      );
+    }
+
+    Navigator.pop(context); // ketika diklik akan menutup halaman serta menampilkan snakbar pada halaman beranda
+  }
+
+  Future<void> _showDialogFailedCreateReservation() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context).alert),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text("${AppLocalizations.of(context).failedCreateReservationText} ${_textDateController.text} ${_textTimeController.text}"),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,19 +234,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
                       72.0)), // menentukan tinggi button
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(
-                      context); // ketika diklik akan menutup halaman serta menampilkan snakbar pada halaman beranda
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(
-                      // menampilkan text pada snakbar
-                      "Jadwal reservasi Anda yakni ${_textDateController.text} pukul ${_textTimeController.text}",
-                      // memberi style warna pada text
-                      style: TextStyle(color: kWhite),
-                      // posisi text berada dikiri
-                      textAlign: TextAlign.left,
-                    ),
-                    backgroundColor: kPrimary, // memberi warna pada snackbar
-                  ));
+                  _checkCurrentReservation();
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(

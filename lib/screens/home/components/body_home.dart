@@ -2,6 +2,7 @@ import 'package:dentistReservationApp/models/Counter.dart';
 import 'package:dentistReservationApp/models/QuestionAndAnswer.dart';
 import 'package:dentistReservationApp/models/Reservation.dart';
 import 'package:dentistReservationApp/models/data_tips_and_tricks.dart';
+import 'package:dentistReservationApp/routing/constanta.dart';
 import 'package:dentistReservationApp/screens/detail/detail_tips_screen.dart';
 import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
@@ -34,52 +35,6 @@ class _BodyHomeState extends State<BodyHome> {
     User userData = FirebaseAuth.instance.currentUser;
     setState(() {
       user = userData;
-    });
-  }
-
-  void _checkCurrentQueue() async {
-    var query = await FirebaseFirestore.instance
-        .collection("reservation")
-        .where('user_id', isEqualTo: user.uid)
-        .where('time', isGreaterThan: DateTime.now())
-        .limit(1)
-        .get();
-
-    if (query.docs.isNotEmpty) return;
-    _createQueue();
-  }
-
-  void _createQueue() {
-    FirebaseFirestore.instance
-        .collection("counter")
-        .limit(1)
-        .get()
-        .then((value) {
-      if (value.docs.isNotEmpty && value.docs[0] != null) {
-        int counter = value.docs[0].data()['counter_id'];
-        DateTime time = value.docs[0].data()['time'].toDate();
-        DateTime now = DateTime.now();
-
-        if (time.day != now.day &&
-            time.month == now.month &&
-            time.year == now.year) time = now;
-
-        FirebaseFirestore.instance.collection("reservation").doc().set(
-            new Reservation(
-                    userId: user.uid,
-                    queueNumber: counter,
-                    name: user.displayName,
-                    time: time)
-                .toJson());
-
-        FirebaseFirestore.instance
-            .collection("counter")
-            .doc(value.docs[0].id)
-            .set(new Counter(
-                    counterId: counter + 1,
-                    time: time.add(new Duration(minutes: 30)))
-                .toJson());
-      }
     });
   }
 

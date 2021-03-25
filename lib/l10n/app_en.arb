@@ -298,5 +298,21 @@
     "claim" :  "Claim",
     "@claim": {
         "description": ""
+    },
+    "alert" :  "Warning",
+    "@alert": {
+        "description": ""
+    },
+    "failedCreateReservationText" : "Cannot create reservation at : ",
+    "@failedCreateReservationText": {
+        "description": ""
+    },
+    "titlePromoAdded" : "Promo Claim",
+    "@titlePromoAdded" : {
+
+    },
+    "promoAdded" : "Hass been claimed!",
+    "@promoAdded" : {
+
     }
 }
