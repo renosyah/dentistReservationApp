@@ -15,8 +15,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   static Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
+  // inisialisasi controller nama
   TextEditingController _controllerName = TextEditingController();
+  // inisialisasi controller  email
   TextEditingController _controllerEmail = TextEditingController();
+  // inisialisasi controller password
   TextEditingController _controllerPassword = TextEditingController();
 
   void _validation(BuildContext context) {
@@ -68,93 +71,123 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      // menggunakan singlechildscrollview agar screen bisa digulirkan atau discrolling
       body: SingleChildScrollView(
         child: Padding(
+          // memberi jarak hanya dibagian bawah elemen
           padding: EdgeInsets.only(bottom: getProportionateScreenHeight(36.0)),
+          // menampilkan lemen secara vertical
           child: Column(
             children: [
+              // membuat jarak antar elemen menggunakan sizebox
               SizedBox(
                 height: getProportionateScreenHeight(136.0),
               ),
-              // menampilkan gambar atau logo
               Image.asset(
+                // menampilkan gambar atau logo
                 "assets/logo/logo.png",
+                // panjang logo
                 width: getProportionateScreenWidth(120.0),
+                // tinggi logo
                 height: getProportionateScreenWidth(120.0),
               ),
+              // membuat jarak antar elemen menggunakan sizebox
               SizedBox(
                 height: getProportionateScreenHeight(72.0),
               ),
               Form(
+                  // menampilkan elemen secara vertical
                   child: Column(
                 children: [
                   Padding(
+                    // memberi jarak dikiri dan kanan elemen
                     padding: EdgeInsets.symmetric(
                         horizontal: getProportionateScreenWidth(24.0)),
                     child: TextFormField(
                       // textfield untuk memasukan nama
-                      controller: _controllerName,
-                      keyboardType: TextInputType.name,
+                      controller: _controllerName, // controller untuk nama
+                      keyboardType: TextInputType.name, // inputytpe yakni nama
                       decoration: InputDecoration(
+                        // ,menampilkan hint untuk nama
                         hintText: AppLocalizations.of(context).nameHint,
-                        filled: true,
-                        fillColor: kBackgroundTextField,
+                        filled: true, // mengaktifkan warna pada textformdield
+                        fillColor:
+                            kBackgroundTextField, // memberi warna pada textformdield
                         contentPadding: EdgeInsets.symmetric(
+                            // memberi jarak dikiri dan kanan didalam textformfield
                             horizontal: getProportionateScreenWidth(24.0),
                             vertical: getProportionateScreenWidth(16.0)),
                         border: OutlineInputBorder(
+                            // memberi border atau bingkai
                             borderSide:
                                 BorderSide(width: 0.0, style: BorderStyle.none),
+                            // membuat lengkungan pada textformdield
                             borderRadius: BorderRadius.circular(
                                 getProportionateScreenWidth(8.0))),
                       ),
                     ),
                   ),
+                  // memberi jarak antar elemen menggunakan sizebox
                   SizedBox(
                     height: getProportionateScreenHeight(36.0),
                   ),
                   Padding(
+                    // memberi jarak dikiri dan kanan pada textformdield
                     padding: EdgeInsets.symmetric(
                         horizontal: getProportionateScreenWidth(24.0)),
                     child: TextFormField(
                       // textfield untuk memasukan email
-                      controller: _controllerEmail,
-                      keyboardType: TextInputType.emailAddress,
+                      controller: _controllerEmail, // controller untuk email
+                      keyboardType:
+                          TextInputType.emailAddress, // input type yakni email
                       decoration: InputDecoration(
+                        // menampilkan hinti untuk email
                         hintText: AppLocalizations.of(context).emailHint,
-                        filled: true,
-                        fillColor: kBackgroundTextField,
+                        filled: true, // mengaktifkan warna pada textformdield
+                        fillColor:
+                            kBackgroundTextField, // memberi warna pada textformdield
                         contentPadding: EdgeInsets.symmetric(
+                            // memberi jarak dikiri dan kanan didalam textformdield
                             horizontal: getProportionateScreenWidth(24.0),
                             vertical: getProportionateScreenWidth(16.0)),
                         border: OutlineInputBorder(
+                            // memberi border atau bingkai
                             borderSide:
                                 BorderSide(width: 0.0, style: BorderStyle.none),
+                            // membuat lengkungan pada textformdield
                             borderRadius: BorderRadius.circular(
                                 getProportionateScreenWidth(8.0))),
                       ),
                     ),
                   ),
+                  // membuat jarak antar elemen menggunakan sizebox
                   SizedBox(
                     height: getProportionateScreenHeight(36.0),
                   ),
                   Padding(
+                    // memberi jarak dikiri dan kanan pada textformdield
                     padding: EdgeInsets.symmetric(
                         horizontal: getProportionateScreenWidth(24.0)),
                     child: TextFormField(
                       // textfield untuk memasukan password
-                      controller: _controllerPassword,
-                      obscureText: true,
+                      controller:
+                          _controllerPassword, // controller untuk password
+                      obscureText: true, // membuat text menjadi titik titik
                       decoration: InputDecoration(
+                        // manampilkan hint untuk password
                         hintText: AppLocalizations.of(context).passwordHint,
-                        filled: true,
-                        fillColor: kBackgroundTextField,
+                        filled: true, // mangaktifkan warna pada textformdield
+                        fillColor:
+                            kBackgroundTextField, // memberi warna pada textformdield
                         contentPadding: EdgeInsets.symmetric(
+                            // memberi jarak dikiri dan kanan didalam textformdield
                             horizontal: getProportionateScreenWidth(24.0),
                             vertical: getProportionateScreenWidth(16.0)),
                         border: OutlineInputBorder(
+                            // memberi border atau bingkai
                             borderSide:
                                 BorderSide(width: 0.0, style: BorderStyle.none),
+                            // membuat lengkungan pada textformdield
                             borderRadius: BorderRadius.circular(
                                 getProportionateScreenWidth(8.0))),
                       ),
@@ -162,51 +195,65 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   )
                 ],
               )),
+              // membuat jarak antar elemen menggunakan sizebox
               SizedBox(
                 height: getProportionateScreenHeight(120.0),
               ),
               // tombol register atau daftar
               Padding(
+                // membuat jarak dikiri dan kanan button
                 padding: EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(24.0)),
                 child: ConstrainedBox(
                   constraints: BoxConstraints.tightFor(
-                      width: double.infinity,
-                      height: getProportionateScreenHeight(72.0)),
+                      width: double
+                          .infinity, // panjang button mengikuti panjang device
+                      height: getProportionateScreenHeight(
+                          72.0)), // menentukan tinggi button
                   child: ElevatedButton(
-                    onPressed: () => _validation(context),
+                    onPressed: () => _validation(
+                        context), // ketika diklik akan menjalan fungsi _validation
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(kPrimary),
-                        elevation: MaterialStateProperty.all(0)),
+                        backgroundColor: MaterialStateProperty.all(
+                            kPrimary), // memberi warna pada button
+                        elevation: MaterialStateProperty.all(
+                            0)), // memberi shadow pada button
                     child: Text(
+                      // menampilkan text Daftar
                       AppLocalizations.of(context).btnRegister,
                       style: TextStyle(
-                        color: kWhite,
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.bold,
+                        color: kWhite, // memberi warna text
+                        fontSize: 22.0, // memberi ukuran text
+                        fontWeight: FontWeight.bold, // memberi ketebalan text
                       ),
                     ),
                   ),
                 ),
               ),
+              // membuat jarak antar elemen menggunkan sizebox
               SizedBox(
                 height: getProportionateScreenHeight(36.0),
               ),
               // text sekaligus navigasi jika akun pernah dibuat
               RichText(
                   text: TextSpan(
+                      // menampilkan text sudah punya akun ?
                       text: AppLocalizations.of(context).alreadyHaveAnAccount,
+                      // memberi style warna dan ukuran text
                       style: TextStyle(color: kText2, fontSize: 16.0),
                       children: [
                     TextSpan(
+                        // menampilkan text silahkan masuk!
                         text: AppLocalizations.of(context).loginText,
                         style: TextStyle(
-                            fontSize: 16.0,
-                            color: kPrimary,
-                            fontWeight: FontWeight.bold),
+                            fontSize: 16.0, // memberi ukuran text
+                            color: kPrimary, // memberi warna text
+                            fontWeight:
+                                FontWeight.bold), // memberi ketebalan text
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () =>
-                              Navigator.pushReplacementNamed(context, login))
+                          ..onTap = () => Navigator.pushReplacementNamed(
+                              context,
+                              login)) // ketika diklik akan mengarah ke halaman login
                   ]))
             ],
           ),

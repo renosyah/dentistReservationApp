@@ -1,9 +1,9 @@
 // kumpulan variabel routing
-const splash = '/';
-const home = '/home';
-const login = '/login';
-const register = '/register';
-const about = '/about';
-const help = '/help';
-const createReservation = "/create";
-const promo = "/promo";
+const splash = '/'; // constanta route splash
+const home = '/home'; // constanta route home
+const login = '/login'; // constanta route login
+const register = '/register'; // constanta route register
+const about = '/about'; // constanta route about
+const help = '/help'; // constanta route help
+const createReservation = "/create"; // constanta route buat reservasi
+const promo = "/promo"; // constanta route promo

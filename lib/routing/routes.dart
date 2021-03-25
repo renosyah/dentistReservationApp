@@ -11,20 +11,28 @@ import 'package:flutter/material.dart';
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
+      // navigasi ke halaman home
       case home:
         return MaterialPageRoute(builder: (_) => HomeScreen());
+      // navigasi ke halaman login
       case login:
         return MaterialPageRoute(builder: (_) => LoginScreen());
+      // navigasi ke halaman register
       case register:
         return MaterialPageRoute(builder: (_) => RegisterScreen());
+      // navigasi ke halaman about
       case about:
         return MaterialPageRoute(builder: (_) => AboutScreen());
+      // navigasi ke halaman help
       case help:
         return MaterialPageRoute(builder: (_) => HelpScreen());
+      // navigasi ke halaman buat reservasi
       case createReservation:
         return MaterialPageRoute(builder: (_) => CreateReservationScreen());
+      // navigasi ke halaman promo
       case promo:
         return MaterialPageRoute(builder: (_) => PromoScreen());
+      // navigasi ke halaman splash
       default:
         return MaterialPageRoute(builder: (_) => SplashScreen());
     }
