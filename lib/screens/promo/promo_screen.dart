@@ -15,7 +15,7 @@ class _PromoScreenState extends State<PromoScreen> {
       // appbar beserta judul
       appBar: AppBar(
         title: Text(
-          promoTextAppBar,
+          AppLocalizations.of(context).promoTextAppBar,
           style: TextStyle(
               color: kPrimary, fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
@@ -106,7 +106,7 @@ class BuildPromoItem extends StatelessWidget {
                     backgroundColor: MaterialStateProperty.all(kPrimary),
                     elevation: MaterialStateProperty.all(0)),
                 child: Text(
-                  claim,
+                  AppLocalizations.of(context).claim,
                   style: TextStyle(
                     color: kWhite,
                     fontSize: 14.0,
