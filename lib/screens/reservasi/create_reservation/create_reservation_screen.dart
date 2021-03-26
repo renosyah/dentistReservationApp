@@ -28,6 +28,8 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
   TextEditingController _textTimeController = TextEditingController();
 
   User user;
+
+  // fungsi untuk mendapatkan data user
   Future<void> getUserData() async {
     User userData = FirebaseAuth.instance.currentUser;
     setState(() {
@@ -35,6 +37,8 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
     });
   }
 
+  // fungsi untuk mendapatkan data reservasi
+  // yang sama dengan yg saat ini dibuat
   void _checkCurrentReservation() async {
 
     if (this._selectedDate == null || this._selectedTime == null) return;
@@ -59,6 +63,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
     _createReservation(reservationTime);
   }
 
+  // fungsi untuk membuat reservasi
   void _createReservation(DateTime reservationTime) async {
 
     var query = await FirebaseFirestore.instance
@@ -83,6 +88,8 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
     Navigator.pop(context); // ketika diklik akan menutup halaman serta menampilkan snakbar pada halaman beranda
   }
 
+  // fungsi untuk menampilkan dialog
+  // gagal reservasi
   Future<void> _showDialogFailedCreateReservation() async {
     return showDialog<void>(
       context: context,

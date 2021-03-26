@@ -25,12 +25,14 @@ class _BodyHomeState extends State<BodyHome> {
   ValueChanged<int> onTap;
   User user;
 
+  // konstruktor
   _BodyHomeState({this.onTap});
 
   carousel.CarouselController _carouselController =
       carousel.CarouselController();
   TextEditingController _controllerQuestion = TextEditingController();
 
+  // fungsi untuk mendapatkan data user
   Future<void> getUserData() async {
     User userData = FirebaseAuth.instance.currentUser;
     setState(() {
@@ -38,6 +40,8 @@ class _BodyHomeState extends State<BodyHome> {
     });
   }
 
+
+  // fungsi untuk mengirim pertanyaan
   void _sendQuestion() {
     if (_controllerQuestion.text.toString().trim().isEmpty) {
       print("question must not be empty");

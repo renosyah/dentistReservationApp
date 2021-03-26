@@ -12,6 +12,8 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   User user;
+
+  // fungsi untuk mendapatkan data user
   Future<void> getUserData() async {
     User userData = FirebaseAuth.instance.currentUser;
     setState(() {

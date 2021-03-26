@@ -16,6 +16,7 @@ class _ReservasiScreenState extends State<ReservasiScreen> {
   User user;
   Stream<QuerySnapshot> _reservation;
 
+  // fungsi untuk mendapatkan data user
   Future<void> getUserData() async {
     User userData = FirebaseAuth.instance.currentUser;
     setState(() {
@@ -23,6 +24,7 @@ class _ReservasiScreenState extends State<ReservasiScreen> {
     });
   }
 
+  // fungsi untuk mendapatkan data reservasi
   void getReservationData() {
     _reservation = FirebaseFirestore.instance
         .collection("reservation")

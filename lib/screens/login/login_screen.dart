@@ -20,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _controllerPassword =
       TextEditingController(); // membuat controller untuk password
 
+  // fungsi validasi form
   void _validation(BuildContext context) {
     RegExp regExp = RegExp(_LoginScreenState.pattern);
     if (_controllerEmail.text.trim().isEmpty ||
@@ -36,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _controllerPassword.text.toString());
   }
 
+  // fungsi login
   void _login(BuildContext context, String email, String password) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -53,6 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   User user;
+
+
+  // fungsi untuk mendapatkan data user
   Future<void> getUserData() async {
     User userData = FirebaseAuth.instance.currentUser;
     if (userData == null) return;

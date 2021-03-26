@@ -21,16 +21,22 @@ class _QnaScreenState extends State<QnaScreen> {
   ValueChanged<int> onTap;
   Stream<QuerySnapshot> _qna;
 
+  // konstruktor
   _QnaScreenState({this.onTap});
 
-  @override
-  void initState() {
-    super.initState();
 
+  // fungsi untuk mendapatkan data qna
+  void getQnAData() {
     _qna = FirebaseFirestore.instance
         .collection("qna")
         .where('user_id', isEqualTo: FirebaseAuth.instance.currentUser.uid)
         .snapshots();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getQnAData();
   }
 
   @override

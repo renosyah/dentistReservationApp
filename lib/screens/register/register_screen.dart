@@ -22,6 +22,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   // inisialisasi controller password
   TextEditingController _controllerPassword = TextEditingController();
 
+  // fungsi validasi
   void _validation(BuildContext context) {
     if (_controllerName.text.trim().isEmpty) {
       print("name invalid");
@@ -43,6 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _controllerEmail.text.toString(), _controllerPassword.text.toString());
   }
 
+  // fungsi register user baru
   void _register(
       BuildContext context, String name, String email, String password) async {
     try {

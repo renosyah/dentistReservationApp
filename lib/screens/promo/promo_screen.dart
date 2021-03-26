@@ -15,6 +15,7 @@ class _PromoScreenState extends State<PromoScreen> {
   User user;
   Stream<QuerySnapshot> _promo;
 
+  // fungsi untuk mendapatkan data user
   Future<void> getUserData() async {
     User userData = FirebaseAuth.instance.currentUser;
     setState(() {
@@ -22,6 +23,8 @@ class _PromoScreenState extends State<PromoScreen> {
     });
   }
 
+  // fungsi untuk mendapatkan
+  // data promo
   void getPromoData() {
     _promo = FirebaseFirestore.instance
         .collection("promo")
@@ -46,7 +49,8 @@ class _PromoScreenState extends State<PromoScreen> {
     _showDialogSuccessClaim(promo);
   }
 
-
+  // fungsi untuk menampilkan dialog
+  // data promo berhasil di claim
   Future<void> _showDialogSuccessClaim(Promo p) async {
     return showDialog<void>(
       context: context,
