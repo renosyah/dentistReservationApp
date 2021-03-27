@@ -96,7 +96,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text("${AppLocalizations.of(context).failedCreateReservationText} ${_textDateController.text} ${_textTimeController.text}"),
+                Text("Reservasi berhasil dibuat, Silahkan periksa halaman Reservasi"),
               ],
             ),
           ),
@@ -325,10 +325,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
     // menampilkan 5 hari selain sabtu dan minggu dalam 1 minggu
     bool _decideWhichDayToEnable(DateTime day) {
       if ((day.isAfter(DateTime.now().subtract(Duration(days: 1))) &&
-              day.isBefore(DateTime.now().add(Duration(days: 6)))) &&
-          day.weekday != 6 && // bukan hari sabtu
-          day.weekday != 7) {
-        // bukan hari minggu
+              day.isBefore(DateTime.now().add(Duration(days: 6))))) {
         return true;
       }
       return false;
