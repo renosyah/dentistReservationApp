@@ -14,18 +14,14 @@ class CreateReservationScreen extends StatefulWidget {
 }
 
 class _CreateReservationScreenState extends State<CreateReservationScreen> {
+  // inisialisasi index saat klik waktu
+  int _selectTime
 
   // inisialisasi type data datetime
   DateTime _selectedDate;
 
-  // inisialisasi type timeofday
-  TimeOfDay _selectedTime;
-
   // inisialisasi controller tanggal
   TextEditingController _textDateController = TextEditingController();
-
-  // inisialisasi controller waktu
-  TextEditingController _textTimeController = TextEditingController();
 
   User user;
 
@@ -138,164 +134,191 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
               fontWeight: FontWeight.bold),
         ),
       ),
-      body: Padding(
-        // memberi jarak disemua sisi elemen
-        padding: EdgeInsets.all(getProportionateScreenWidth(24.0)),
-        // menampilkan elemen secara vertical
-        child: Column(
-          // memulai elemen dari sisi kiri
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              // menampilkan text pilih tanggal
-              AppLocalizations.of(context).chooseDate,
-              // memberi style warna dan ukuran text
-              style: TextStyle(color: kText2, fontSize: 14.0),
-            ),
-            // memberi jarak antar elemen menggunakan sizebox
-            SizedBox(
-              height: getProportionateScreenHeight(8.0),
-            ),
-            // field untuk memasukan tanggal
-            Form(
-                child: TextFormField(
-              onTap: () {
-                FocusScope.of(context).requestFocus(new FocusNode());
-                _selectDate(context); // ketika diklik jalan fungsi selectdate
-              },
-              controller: _textDateController, // controller untuk tanggal
-              focusNode: AlwaysDisabledFocusNode(),
-              decoration: InputDecoration(
-                // menampilkan hint untuk tanggal
-                hintText: AppLocalizations.of(context).chooseDate,
-                filled: true, // mengaktifkan warna
-                fillColor:
-                    kBackgroundTextField, // memberi warna pada textformfield
-                suffixIcon: Icon(Icons
-                    .calendar_today_rounded), // icon calendar untuk textformfield tanggal
-                contentPadding: EdgeInsets.symmetric(
-                    // memberi jarak di kiri dan kanan didalam textformfield
-                    horizontal: getProportionateScreenWidth(24.0),
-                    vertical: getProportionateScreenWidth(16.0)),
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        width: 0.0,
-                        style: BorderStyle
-                            .none), // memberi ukuran border dan style
-                    borderRadius: BorderRadius.circular(
-                        // membuat lengkungan pada textformfield
-                        getProportionateScreenWidth(8.0))),
+      body: SingleChildScrollView(
+          Padding(
+          // memberi jarak disemua sisi elemen
+          padding: EdgeInsets.all(getProportionateScreenWidth(24.0)),
+          // menampilkan elemen secara vertical
+          child: Column(
+            // memulai elemen dari sisi kiri
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                // menampilkan text pilih tanggal
+                AppLocalizations.of(context).chooseDate,
+                // memberi style warna dan ukuran text
+                style: TextStyle(color: kText2, fontSize: 14.0),
               ),
-            )),
-            // membuat jarak antar elemen menggunakan sizebox
-            SizedBox(
-              height: getProportionateScreenHeight(24.0),
-            ),
-            Text(
-              // menampilan text pilih waktu
-              AppLocalizations.of(context).chooseTime,
-              // memberi style warna dan ukuran pada text
-              style: TextStyle(color: kText2, fontSize: 14.0),
-            ),
-            // membuat jarak antar elemen menggunakan sizebox
-            SizedBox(
-              height: getProportionateScreenHeight(8.0),
-            ),
-            // field untuk memasukan waktu
-            Form(
-                child: TextFormField(
-              onTap: () {
-                _selectTime(
-                    context); // jika di klik akan menjalan fungsi selecttime
-              },
-              controller: _textTimeController, // controller untuk waktu
-              autofocus: false, // autofokus diberi nilai false
-              focusNode: AlwaysDisabledFocusNode(),
-              decoration: InputDecoration(
-                // menampilkan text pilih waktu
-                hintText: AppLocalizations.of(context).chooseTime,
-                filled: true, // mengaktifkan warna textformfield
-                fillColor: kBackgroundTextField, // memberi warna textformfield
-                suffixIcon:
-                    Icon(Icons.access_time_rounded), // memberi icon waktu
-                contentPadding: EdgeInsets.symmetric(
-                    // memberi jarak di kiri dan kana elemen didalam textformfield
-                    horizontal: getProportionateScreenWidth(24.0),
-                    vertical: getProportionateScreenWidth(16.0)),
-                border: OutlineInputBorder(
-                    // memberi border atau bingkai
-                    borderSide: BorderSide(width: 0.0, style: BorderStyle.none),
-                    // membuat lengkungan pada textformfield
-                    borderRadius: BorderRadius.circular(
-                        getProportionateScreenWidth(8.0))),
+              // memberi jarak antar elemen menggunakan sizebox
+              SizedBox(
+                height: getProportionateScreenHeight(8.0),
               ),
-            )),
-            // membuat jarak anatar elemen menggunakan spacer
-            Spacer(),
-            // tombol untuk buat reservasi
-            ConstrainedBox(
-              constraints: BoxConstraints.tightFor(
-                  width: double
-                      .infinity, // panjang button mengikuti panjang device
-                  height: getProportionateScreenHeight(
-                      72.0)), // menentukan tinggi button
-              child: ElevatedButton(
-                onPressed: () {
-                  _checkCurrentReservation();
+              // field untuk memasukan tanggal
+              Form(
+                  child: TextFormField(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(new FocusNode());
+                  _selectDate(context); // ketika diklik jalan fungsi selectdate
                 },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        kPrimary), // memberi warna pada button buat reservasi
-                    elevation: MaterialStateProperty.all(
-                        0)), // memberi shadow pada button buat reservasi
-                child: Text(
-                  // menampilkan text buat reservasi
-                  AppLocalizations.of(context).createReservationApp,
-                  style: TextStyle(
-                    color: kWhite, // memberi warna text
-                    fontSize: 22.0, // memberi ukuran text
-                    fontWeight: FontWeight.bold, // memberi ketebalan text
+                controller: _textDateController, // controller untuk tanggal
+                focusNode: AlwaysDisabledFocusNode(),
+                decoration: InputDecoration(
+                  // menampilkan hint untuk tanggal
+                  hintText: AppLocalizations.of(context).chooseDate,
+                  filled: true, // mengaktifkan warna
+                  fillColor:
+                      kBackgroundTextField, // memberi warna pada textformfield
+                  suffixIcon: Icon(Icons
+                      .calendar_today_rounded), // icon calendar untuk textformfield tanggal
+                  contentPadding: EdgeInsets.symmetric(
+                      // memberi jarak di kiri dan kanan didalam textformfield
+                      horizontal: getProportionateScreenWidth(24.0),
+                      vertical: getProportionateScreenWidth(16.0)),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 0.0,
+                          style: BorderStyle
+                              .none), // memberi ukuran border dan style
+                      borderRadius: BorderRadius.circular(
+                          // membuat lengkungan pada textformfield
+                          getProportionateScreenWidth(8.0))),
+                ),
+              )),
+              // membuat jarak antar elemen menggunakan sizebox
+              SizedBox(
+                height: getProportionateScreenHeight(24.0),
+              ),
+              Text(
+                // menampilan text pilih waktu
+                AppLocalizations.of(context).chooseTime,
+                // memberi style warna dan ukuran pada text
+                style: TextStyle(color: kText2, fontSize: 14.0),
+              ),
+              // membuat jarak antar elemen menggunakan sizebox
+              SizedBox(
+                height: getProportionateScreenHeight(8.0),
+              ),
+              // field untuk memasukan waktu
+              Wrap(
+                  alignment: WrapAlignment.spaceEvenly,
+                  runSpacing: getProportionateScreenWidth(8.0),
+                  spacing: getProportionateScreenWidth(8.0),
+                  children: [
+                    ...List.generate(
+                        chooseTimeList.length,
+                        (index) => GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  if (chooseTimeList[index].status) {
+                                    _selectTime = index;
+                                  }
+                                });
+                              },
+                              child: Container(
+                                width: getProportionateScreenWidth(116.0),
+                                height: getProportionateScreenHeight(56.0),
+                                decoration: BoxDecoration(
+                                    color: chooseTimeList[index].status &&
+                                            _selectTime == index
+                                        ? kPrimary
+                                        : !chooseTimeList[index].status
+                                            ? Colors.red
+                                            : kWhite,
+                                    borderRadius: BorderRadius.circular(
+                                        getProportionateScreenWidth(8.0)),
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                          blurRadius: 8,
+                                          spreadRadius: 4,
+                                          offset: Offset(0.0, 0.0),
+                                          color: kText1.withOpacity(0.1))
+                                    ]),
+                                child: Center(
+                                  child: Text(
+                                    chooseTimeList[index].time,
+                                    style: TextStyle(
+                                        color: chooseTimeList[index].status &&
+                                                _selectTime == index
+                                            ? kWhite
+                                            : !chooseTimeList[index].status
+                                                ? kWhite
+                                                : kText2,
+                                        fontSize: 16.0),
+                                  ),
+                                ),
+                              ),
+                            ))
+                  ],
+                ),
+              // membuat jarak antar elemen menggunakan sizebox
+              SizedBox(
+                  height: getProportionateScreenHeight(56.0),
+                ),
+              // tombol untuk buat reservasi
+              ConstrainedBox(
+                constraints: BoxConstraints.tightFor(
+                    width: double
+                        .infinity, // panjang button mengikuti panjang device
+                    height: getProportionateScreenHeight(
+                        72.0)), // menentukan tinggi button
+                child: ElevatedButton(
+                  onPressed: () {
+                    _checkCurrentReservation();
+                  },
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          kPrimary), // memberi warna pada button buat reservasi
+                      elevation: MaterialStateProperty.all(
+                          0)), // memberi shadow pada button buat reservasi
+                  child: Text(
+                    // menampilkan text buat reservasi
+                    AppLocalizations.of(context).createReservationApp,
+                    style: TextStyle(
+                      color: kWhite, // memberi warna text
+                      fontSize: 22.0, // memberi ukuran text
+                      fontWeight: FontWeight.bold, // memberi ketebalan text
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 
   // funsi untuk menampilkan tanggal dalam bentuk datepicker
-  _selectTime(BuildContext context) async {
-    TimeOfDay _newSelectedTime = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(), // inisialisasi waktu sekarang
-        builder: (context, child) => Theme(
-            // ubah tema
-            data: ThemeData.light().copyWith(
-              primaryColor: kPrimary, // memberi warna pada timepicker
-              accentColor: kPrimary, // memberi warna pada timepicker
-              colorScheme: ColorScheme.light(
-                  primary: kPrimary), // memberi warna pada timepicker
-              buttonTheme: ButtonThemeData(
-                  textTheme:
-                      ButtonTextTheme.primary), // memberi warna pada timepicker
-            ),
-            child: child));
+  // _selectTime(BuildContext context) async {
+  //   TimeOfDay _newSelectedTime = await showTimePicker(
+  //       context: context,
+  //       initialTime: TimeOfDay.now(), // inisialisasi waktu sekarang
+  //       builder: (context, child) => Theme(
+  //           // ubah tema
+  //           data: ThemeData.light().copyWith(
+  //             primaryColor: kPrimary, // memberi warna pada timepicker
+  //             accentColor: kPrimary, // memberi warna pada timepicker
+  //             colorScheme: ColorScheme.light(
+  //                 primary: kPrimary), // memberi warna pada timepicker
+  //             buttonTheme: ButtonThemeData(
+  //                 textTheme:
+  //                     ButtonTextTheme.primary), // memberi warna pada timepicker
+  //           ),
+  //           child: child));
 
-    // menampilkan waktu yang dipilih ke dalam field pilih waktu
-    // jika -newselectedTime tidak sam dengan null
-    if (_newSelectedTime != null) {
-      // maka variable _selectedTime diisi nilai _newselectedtime
-      _selectedTime = _newSelectedTime;
-      // dan masukan ke dalam controller waktu dengan format dan panjang yang telah ditentukan
-      _textTimeController
-        ..text = _selectedTime.format(context)
-        ..selection = TextSelection.fromPosition(TextPosition(
-            offset: _textTimeController.text.length,
-            affinity: TextAffinity.upstream));
-    }
-  }
+  //   // menampilkan waktu yang dipilih ke dalam field pilih waktu
+  //   // jika -newselectedTime tidak sam dengan null
+  //   if (_newSelectedTime != null) {
+  //     // maka variable _selectedTime diisi nilai _newselectedtime
+  //     _selectedTime = _newSelectedTime;
+  //     // dan masukan ke dalam controller waktu dengan format dan panjang yang telah ditentukan
+  //     _textTimeController
+  //       ..text = _selectedTime.format(context)
+  //       ..selection = TextSelection.fromPosition(TextPosition(
+  //           offset: _textTimeController.text.length,
+  //           affinity: TextAffinity.upstream));
+  //   }
+  // }
 
   // funsi untuk menampilkan waktu dalam bentuk timepicker
   _selectDate(BuildContext context) async {
