@@ -1,5 +1,6 @@
 import 'package:dentistReservationApp/models/Counter.dart';
 import 'package:dentistReservationApp/models/Reservation.dart';
+import 'package:dentistReservationApp/models/data_time.dart';
 import 'package:dentistReservationApp/utils/colors.dart';
 import 'package:dentistReservationApp/utils/size_config.dart';
 import 'package:flutter/material.dart';
@@ -10,15 +11,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class CreateReservationScreen extends StatefulWidget {
   @override
-  _CreateReservationScreenState createState() => _CreateReservationScreenState();
+  _CreateReservationScreenState createState() =>
+      _CreateReservationScreenState();
 }
 
 class _CreateReservationScreenState extends State<CreateReservationScreen> {
   // inisialisasi index saat klik waktu
-  int _selectTime
+  int _selectTime;
+
+  ChooseTime _chooseTime = ChooseTime();
 
   // inisialisasi type data datetime
   DateTime _selectedDate;
+  TimeOfDay _selectedTime;
 
   // inisialisasi controller tanggal
   TextEditingController _textDateController = TextEditingController();
@@ -36,22 +41,22 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
   // fungsi untuk mendapatkan data reservasi
   // yang sama dengan yg saat ini dibuat
   void _checkCurrentReservation() async {
-
     if (this._selectedDate == null || this._selectedTime == null) return;
 
     DateTime reservationTime = new DateTime(
-        this._selectedDate.year,this._selectedDate.month,this._selectedDate.day,
-        this._selectedTime.hour,this._selectedTime.minute
-    );
+        this._selectedDate.year,
+        this._selectedDate.month,
+        this._selectedDate.day,
+        this._selectedTime.hour,
+        this._selectedTime.minute);
 
     var query = await FirebaseFirestore.instance
         .collection("reservation")
-        .where('time',isEqualTo: reservationTime)
+        .where('time', isEqualTo: reservationTime)
         .limit(1)
         .get();
 
     if (query.docs.isNotEmpty) {
-
       _showDialogFailedCreateReservation();
       return;
     }
@@ -61,27 +66,28 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
 
   // fungsi untuk membuat reservasi
   void _createReservation(DateTime reservationTime) async {
-
-    var query = await FirebaseFirestore.instance
-        .collection("counter")
-        .limit(1)
-        .get();
+    var query =
+        await FirebaseFirestore.instance.collection("counter").limit(1).get();
 
     if (query.docs.isNotEmpty && query.docs[0] != null) {
       int counter = query.docs[0].data()['counter_id'];
 
       FirebaseFirestore.instance.collection("reservation").doc().set(
-          new Reservation(userId: user.uid, queueNumber: counter, name: user.displayName, time: reservationTime).toJson()
-      );
+          new Reservation(
+                  userId: user.uid,
+                  queueNumber: counter,
+                  name: user.displayName,
+                  time: reservationTime)
+              .toJson());
 
       FirebaseFirestore.instance
-        .collection("counter")
-        .doc(query.docs[0].id)
-        .set(new Counter(counterId: counter + 1).toJson()
-      );
+          .collection("counter")
+          .doc(query.docs[0].id)
+          .set(new Counter(counterId: counter + 1).toJson());
     }
 
-    Navigator.pop(context); // ketika diklik akan menutup halaman serta menampilkan snakbar pada halaman beranda
+    Navigator.pop(
+        context); // ketika diklik akan menutup halaman serta menampilkan snakbar pada halaman beranda
   }
 
   // fungsi untuk menampilkan dialog
@@ -96,7 +102,8 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text("Reservasi berhasil dibuat, Silahkan periksa halaman Reservasi"),
+                Text(
+                    "Reservasi berhasil dibuat, Silahkan periksa halaman Reservasi"),
               ],
             ),
           ),
@@ -122,84 +129,81 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appbar beserta judul
-      appBar: AppBar(
-        title: Text(
-          // menampilkan judul appbar buat reservasi
-          AppLocalizations.of(context).createReservationApp,
-          style: TextStyle(
-              // memberi style warna ukuran dan ketebalan judul
-              color: kPrimary,
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold),
+        // appbar beserta judul
+        appBar: AppBar(
+          title: Text(
+            // menampilkan judul appbar buat reservasi
+            AppLocalizations.of(context).createReservationApp,
+            style: TextStyle(
+                // memberi style warna ukuran dan ketebalan judul
+                color: kPrimary,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold),
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-          Padding(
-          // memberi jarak disemua sisi elemen
-          padding: EdgeInsets.all(getProportionateScreenWidth(24.0)),
-          // menampilkan elemen secara vertical
-          child: Column(
-            // memulai elemen dari sisi kiri
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                // menampilkan text pilih tanggal
-                AppLocalizations.of(context).chooseDate,
-                // memberi style warna dan ukuran text
-                style: TextStyle(color: kText2, fontSize: 14.0),
-              ),
-              // memberi jarak antar elemen menggunakan sizebox
-              SizedBox(
-                height: getProportionateScreenHeight(8.0),
-              ),
-              // field untuk memasukan tanggal
-              Form(
-                  child: TextFormField(
-                onTap: () {
-                  FocusScope.of(context).requestFocus(new FocusNode());
-                  _selectDate(context); // ketika diklik jalan fungsi selectdate
-                },
-                controller: _textDateController, // controller untuk tanggal
-                focusNode: AlwaysDisabledFocusNode(),
-                decoration: InputDecoration(
-                  // menampilkan hint untuk tanggal
-                  hintText: AppLocalizations.of(context).chooseDate,
-                  filled: true, // mengaktifkan warna
-                  fillColor:
-                      kBackgroundTextField, // memberi warna pada textformfield
-                  suffixIcon: Icon(Icons
-                      .calendar_today_rounded), // icon calendar untuk textformfield tanggal
-                  contentPadding: EdgeInsets.symmetric(
-                      // memberi jarak di kiri dan kanan didalam textformfield
-                      horizontal: getProportionateScreenWidth(24.0),
-                      vertical: getProportionateScreenWidth(16.0)),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 0.0,
-                          style: BorderStyle
-                              .none), // memberi ukuran border dan style
-                      borderRadius: BorderRadius.circular(
-                          // membuat lengkungan pada textformfield
-                          getProportionateScreenWidth(8.0))),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(getProportionateScreenWidth(24.0)),
+            child: Column(
+              children: [
+                Text(
+                  // menampilkan text pilih tanggal
+                  AppLocalizations.of(context).chooseDate,
+                  // memberi style warna dan ukuran text
+                  style: TextStyle(color: kText2, fontSize: 14.0),
                 ),
-              )),
-              // membuat jarak antar elemen menggunakan sizebox
-              SizedBox(
-                height: getProportionateScreenHeight(24.0),
-              ),
-              Text(
-                // menampilan text pilih waktu
-                AppLocalizations.of(context).chooseTime,
-                // memberi style warna dan ukuran pada text
-                style: TextStyle(color: kText2, fontSize: 14.0),
-              ),
-              // membuat jarak antar elemen menggunakan sizebox
-              SizedBox(
-                height: getProportionateScreenHeight(8.0),
-              ),
-              // field untuk memasukan waktu
-              Wrap(
+                // memberi jarak antar elemen menggunakan sizebox
+                SizedBox(
+                  height: getProportionateScreenHeight(8.0),
+                ),
+                // field untuk memasukan tanggal
+                Form(
+                    child: TextFormField(
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(new FocusNode());
+                    _selectDate(
+                        context); // ketika diklik jalan fungsi selectdate
+                  },
+                  controller: _textDateController, // controller untuk tanggal
+                  focusNode: AlwaysDisabledFocusNode(),
+                  decoration: InputDecoration(
+                    // menampilkan hint untuk tanggal
+                    hintText: AppLocalizations.of(context).chooseDate,
+                    filled: true, // mengaktifkan warna
+                    fillColor:
+                        kBackgroundTextField, // memberi warna pada textformfield
+                    suffixIcon: Icon(Icons
+                        .calendar_today_rounded), // icon calendar untuk textformfield tanggal
+                    contentPadding: EdgeInsets.symmetric(
+                        // memberi jarak di kiri dan kanan didalam textformfield
+                        horizontal: getProportionateScreenWidth(24.0),
+                        vertical: getProportionateScreenWidth(16.0)),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 0.0,
+                            style: BorderStyle
+                                .none), // memberi ukuran border dan style
+                        borderRadius: BorderRadius.circular(
+                            // membuat lengkungan pada textformfield
+                            getProportionateScreenWidth(8.0))),
+                  ),
+                )),
+                // membuat jarak antar elemen menggunakan sizebox
+                SizedBox(
+                  height: getProportionateScreenHeight(24.0),
+                ),
+                Text(
+                  // menampilan text pilih waktu
+                  AppLocalizations.of(context).chooseTime,
+                  // memberi style warna dan ukuran pada text
+                  style: TextStyle(color: kText2, fontSize: 14.0),
+                ),
+                // membuat jarak antar elemen menggunakan sizebox
+                SizedBox(
+                  height: getProportionateScreenHeight(8.0),
+                ),
+                // field untuk memasukan waktu
+                Wrap(
                   alignment: WrapAlignment.spaceEvenly,
                   runSpacing: getProportionateScreenWidth(8.0),
                   spacing: getProportionateScreenWidth(8.0),
@@ -250,42 +254,40 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
                             ))
                   ],
                 ),
-              // membuat jarak antar elemen menggunakan sizebox
-              SizedBox(
+                // membuat jarak antar elemen menggunakan sizebox
+                SizedBox(
                   height: getProportionateScreenHeight(56.0),
                 ),
-              // tombol untuk buat reservasi
-              ConstrainedBox(
-                constraints: BoxConstraints.tightFor(
-                    width: double
-                        .infinity, // panjang button mengikuti panjang device
-                    height: getProportionateScreenHeight(
-                        72.0)), // menentukan tinggi button
-                child: ElevatedButton(
-                  onPressed: () {
-                    _checkCurrentReservation();
-                  },
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          kPrimary), // memberi warna pada button buat reservasi
-                      elevation: MaterialStateProperty.all(
-                          0)), // memberi shadow pada button buat reservasi
-                  child: Text(
-                    // menampilkan text buat reservasi
-                    AppLocalizations.of(context).createReservationApp,
-                    style: TextStyle(
-                      color: kWhite, // memberi warna text
-                      fontSize: 22.0, // memberi ukuran text
-                      fontWeight: FontWeight.bold, // memberi ketebalan text
-                    ),
-                  ),
-                ),
-              ),
-            ],
+                // tombol untuk buat reservasi
+                ConstrainedBox(
+                    constraints: BoxConstraints.tightFor(
+                        width: double
+                            .infinity, // panjang button mengikuti panjang device
+                        height: getProportionateScreenHeight(
+                            72.0)), // menentukan tinggi button
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _checkCurrentReservation();
+                      },
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              kPrimary), // memberi warna pada button buat reservasi
+                          elevation: MaterialStateProperty.all(
+                              0)), // memberi shadow pada button buat reservasi
+                      child: Text(
+                        // menampilkan text buat reservasi
+                        AppLocalizations.of(context).createReservationApp,
+                        style: TextStyle(
+                          color: kWhite, // memberi warna text
+                          fontSize: 22.0, // memberi ukuran text
+                          fontWeight: FontWeight.bold, // memberi ketebalan text
+                        ),
+                      ),
+                    ))
+              ],
+            ),
           ),
-        ),
-      )
-    );
+        ));
   }
 
   // funsi untuk menampilkan tanggal dalam bentuk datepicker
@@ -325,7 +327,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
     // menampilkan 5 hari selain sabtu dan minggu dalam 1 minggu
     bool _decideWhichDayToEnable(DateTime day) {
       if ((day.isAfter(DateTime.now().subtract(Duration(days: 1))) &&
-              day.isBefore(DateTime.now().add(Duration(days: 6))))) {
+          day.isBefore(DateTime.now().add(Duration(days: 6))))) {
         return true;
       }
       return false;
