@@ -12,8 +12,8 @@
 
     <application
         android:name=".Application"
-        android:label="dentistReservationApp"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Dentist Reservation"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

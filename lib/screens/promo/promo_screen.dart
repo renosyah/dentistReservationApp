@@ -107,8 +107,10 @@ class _PromoScreenState extends State<PromoScreen> {
               List<Promo> list = new List<Promo>();
               for (DocumentSnapshot snap in snapshot.data.docs) {
                 Promo p = Promo.fromJson(snap.data());
-                p.id = snap.id;
-                list.add(p);
+                if ((p.claimBy.length < 3) || p.claimBy.contains(user.uid)){
+                  p.id = snap.id;
+                  list.add(p);
+                }
               }
               // menggunakan list untuk menampilkan item promo
               return 	SingleChildScrollView(
@@ -218,7 +220,7 @@ class BuildPromoItem extends StatelessWidget {
                       96.0), // menentukan panjang button klaim
                   height: getProportionateScreenHeight(
                       44.0)), // menentukan tinggi button klaim
-              child: promo.claimBy.contains(uid) || (promo.claimBy.length >= 3) ? ElevatedButton(
+              child: promo.claimBy.contains(uid) ? ElevatedButton(
                 onPressed: (){ },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
@@ -229,7 +231,7 @@ class BuildPromoItem extends StatelessWidget {
                   // menampilkan text klaim
                   AppLocalizations.of(context).claim,
                   style: TextStyle(
-                    color: kTextHint, // memberi warna pada text
+                    color: kBackgroundTextField, // memberi warna pada text
                     fontSize: 14.0, // memberi ukuran pada text
                     fontWeight: FontWeight.bold, // memberi ketebalan pada text
                   ),

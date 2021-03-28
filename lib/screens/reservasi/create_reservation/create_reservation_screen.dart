@@ -1,3 +1,4 @@
+
 import 'package:dentistReservationApp/models/Counter.dart';
 import 'package:dentistReservationApp/models/Reservation.dart';
 import 'package:dentistReservationApp/models/data_time.dart';
@@ -16,10 +17,6 @@ class CreateReservationScreen extends StatefulWidget {
 }
 
 class _CreateReservationScreenState extends State<CreateReservationScreen> {
-  // inisialisasi index saat klik waktu
-  int _selectTime;
-
-  ChooseTime _chooseTime = ChooseTime();
 
   // inisialisasi type data datetime
   DateTime _selectedDate;
@@ -29,6 +26,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
   TextEditingController _textDateController = TextEditingController();
 
   User user;
+  Stream<QuerySnapshot> _reservation;
 
   // fungsi untuk mendapatkan data user
   Future<void> getUserData() async {
@@ -36,6 +34,31 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
     setState(() {
       user = userData;
     });
+  }
+
+  // fungsi untuk mendapatkan data reservasi
+  void getReservationData() {
+
+    // jika tanggal belum dipilih maka stop!
+    if (_selectedDate == null) {
+
+      // query reservasi
+      _reservation = FirebaseFirestore.instance
+          .collection("reservation")
+          .orderBy('time', descending: false)
+          .limit(0)
+          .snapshots();
+      return;
+    }
+
+    // query reservasi
+    _reservation = FirebaseFirestore.instance
+        .collection("reservation")
+        .where('time', isGreaterThanOrEqualTo: DateTime(_selectedDate.year,_selectedDate.month,_selectedDate.day,8,0,0))
+        .where('time', isLessThanOrEqualTo: DateTime(_selectedDate.year,_selectedDate.month,_selectedDate.day,17,0,0))
+        .orderBy('time', descending: false)
+        .limit(20)
+        .snapshots();
   }
 
   // fungsi untuk mendapatkan data reservasi
@@ -57,7 +80,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
         .get();
 
     if (query.docs.isNotEmpty) {
-      _showDialogFailedCreateReservation();
+      _showDialogFailedCreateReservation("${AppLocalizations.of(context).failedCreateReservationText} ${reservationTime.toString()}");
       return;
     }
 
@@ -86,13 +109,12 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
           .set(new Counter(counterId: counter + 1).toJson());
     }
 
-    Navigator.pop(
-        context); // ketika diklik akan menutup halaman serta menampilkan snakbar pada halaman beranda
+    Navigator.pop(context); // ketika diklik akan menutup halaman serta menampilkan snakbar pada halaman beranda
   }
 
   // fungsi untuk menampilkan dialog
   // gagal reservasi
-  Future<void> _showDialogFailedCreateReservation() async {
+  Future<void> _showDialogFailedCreateReservation(String text) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -102,8 +124,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(
-                    "Reservasi berhasil dibuat, Silahkan periksa halaman Reservasi"),
+                Text(text),
               ],
             ),
           ),
@@ -203,56 +224,90 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
                   height: getProportionateScreenHeight(8.0),
                 ),
                 // field untuk memasukan waktu
-                Wrap(
-                  alignment: WrapAlignment.spaceEvenly,
-                  runSpacing: getProportionateScreenWidth(8.0),
-                  spacing: getProportionateScreenWidth(8.0),
-                  children: [
-                    ...List.generate(
-                        chooseTimeList.length,
-                        (index) => GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  if (chooseTimeList[index].status) {
-                                    _selectTime = index;
-                                  }
-                                });
-                              },
-                              child: Container(
-                                width: getProportionateScreenWidth(116.0),
-                                height: getProportionateScreenHeight(56.0),
-                                decoration: BoxDecoration(
-                                    color: chooseTimeList[index].status &&
-                                            _selectTime == index
-                                        ? kPrimary
-                                        : !chooseTimeList[index].status
-                                            ? Colors.red
-                                            : kWhite,
-                                    borderRadius: BorderRadius.circular(
-                                        getProportionateScreenWidth(8.0)),
-                                    boxShadow: <BoxShadow>[
-                                      BoxShadow(
-                                          blurRadius: 8,
-                                          spreadRadius: 4,
-                                          offset: Offset(0.0, 0.0),
-                                          color: kText1.withOpacity(0.1))
-                                    ]),
-                                child: Center(
-                                  child: Text(
-                                    chooseTimeList[index].time,
-                                    style: TextStyle(
-                                        color: chooseTimeList[index].status &&
-                                                _selectTime == index
-                                            ? kWhite
-                                            : !chooseTimeList[index].status
-                                                ? kWhite
-                                                : kText2,
-                                        fontSize: 16.0),
+                StreamBuilder<QuerySnapshot>(
+                    stream: _reservation,
+                    builder: (context,snapshot){
+
+                        // deklarasi array
+                        var slot = new ChooseTime().create();
+                        var now = DateTime.now();
+
+                        // check jika slot telah
+                        // di reservasi
+                        for (var i=0;i<slot.length;i++){
+                          var t = slot[i];
+
+                          // check jika waktu telah lewat
+                          if (_selectedDate != null && (now.difference(DateTime(_selectedDate.year ,_selectedDate.month,_selectedDate.day, t.datetime.hour, t.datetime.minute)).inMinutes > 0)){
+                            slot[i].status = false;
+                            continue;
+                          }
+
+                          // check jika waktu jika weekend
+                          if (_selectedDate != null && (_selectedDate.weekday == DateTime.sunday || _selectedDate.weekday == DateTime.saturday)){
+                            slot[i].status = false;
+                            continue;
+                          }
+
+                          if (snapshot.hasData){
+                            // check setiap reservasi
+                            for (var doc in snapshot.data.docs){
+                                Reservation r = Reservation.fromJson(doc.data());
+
+                                // jika telah di ambil, set nilai ke false
+                                if (r.time.difference(DateTime(r.time.year ,r.time.month,r.time.day, t.datetime.hour, t.datetime.minute)).inMinutes == 0){
+                                  slot[i].status = false;
+                                }
+                            }
+                          }
+
+                          if (!slot[i].status) {
+                            continue;
+                          }
+                        }
+                        // tampilkan
+                        return Wrap(
+                          alignment: WrapAlignment.spaceEvenly,
+                          runSpacing: getProportionateScreenWidth(8.0),
+                          spacing: getProportionateScreenWidth(8.0),
+                          children: [
+                            ...List.generate(
+                                slot.length,
+                                    (index) => GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      if (slot[index].status) {
+                                        _selectedTime = slot[index].datetime;
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    width: getProportionateScreenWidth(116.0),
+                                    height: getProportionateScreenHeight(56.0),
+                                    decoration: BoxDecoration(
+                                        color: slot[index].status && _selectedTime == slot[index].datetime ? kPrimary  : !slot[index].status ? Colors.red : kWhite,
+                                        borderRadius: BorderRadius.circular(
+                                            getProportionateScreenWidth(8.0)),
+                                        boxShadow: <BoxShadow>[
+                                          BoxShadow(
+                                              blurRadius: 8,
+                                              spreadRadius: 4,
+                                              offset: Offset(0.0, 0.0),
+                                              color: kText1.withOpacity(0.1))
+                                        ]),
+                                    child: Center(
+                                      child: Text(
+                                        slot[index].time,
+                                        style: TextStyle(
+                                            color: slot[index].status && _selectedTime == slot[index].datetime ? kWhite : !slot[index].status ? kWhite : kText2,
+                                            fontSize: 16.0),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ))
-                  ],
+                                ))
+                          ],
+                        );
+                    }
                 ),
                 // membuat jarak antar elemen menggunakan sizebox
                 SizedBox(
@@ -290,38 +345,6 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
         ));
   }
 
-  // funsi untuk menampilkan tanggal dalam bentuk datepicker
-  // _selectTime(BuildContext context) async {
-  //   TimeOfDay _newSelectedTime = await showTimePicker(
-  //       context: context,
-  //       initialTime: TimeOfDay.now(), // inisialisasi waktu sekarang
-  //       builder: (context, child) => Theme(
-  //           // ubah tema
-  //           data: ThemeData.light().copyWith(
-  //             primaryColor: kPrimary, // memberi warna pada timepicker
-  //             accentColor: kPrimary, // memberi warna pada timepicker
-  //             colorScheme: ColorScheme.light(
-  //                 primary: kPrimary), // memberi warna pada timepicker
-  //             buttonTheme: ButtonThemeData(
-  //                 textTheme:
-  //                     ButtonTextTheme.primary), // memberi warna pada timepicker
-  //           ),
-  //           child: child));
-
-  //   // menampilkan waktu yang dipilih ke dalam field pilih waktu
-  //   // jika -newselectedTime tidak sam dengan null
-  //   if (_newSelectedTime != null) {
-  //     // maka variable _selectedTime diisi nilai _newselectedtime
-  //     _selectedTime = _newSelectedTime;
-  //     // dan masukan ke dalam controller waktu dengan format dan panjang yang telah ditentukan
-  //     _textTimeController
-  //       ..text = _selectedTime.format(context)
-  //       ..selection = TextSelection.fromPosition(TextPosition(
-  //           offset: _textTimeController.text.length,
-  //           affinity: TextAffinity.upstream));
-  //   }
-  // }
-
   // funsi untuk menampilkan waktu dalam bentuk timepicker
   _selectDate(BuildContext context) async {
     // menampilkan 5 hari selain sabtu dan minggu dalam 1 minggu
@@ -356,14 +379,21 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
     // menampilkan tanggal yang dipilih ke dalam field pilih tanggal
     // jika newSelectedDate tidak sama dengan null
     if (newSelectedDate != null) {
-      // maka _selectedDate diisi dengan nilai newSelectedDate
-      _selectedDate = newSelectedDate;
+      setState(() {
+        // maka _selectedDate diisi dengan nilai newSelectedDate
+        _selectedDate = newSelectedDate;
+
+        // query data reservasi
+        getReservationData();
+
+      });
       // dan masukan ke dalam controller tanggal dengan format tanggal yang telah ditentukan
       _textDateController
         ..text = DateFormat.yMMMd().format(_selectedDate)
         ..selection = TextSelection.fromPosition(TextPosition(
             offset: _textDateController.text.length,
             affinity: TextAffinity.upstream));
+
     }
   }
 }
