@@ -1,6 +1,4 @@
-import 'package:dentistReservationApp/models/Counter.dart';
 import 'package:dentistReservationApp/models/QuestionAndAnswer.dart';
-import 'package:dentistReservationApp/models/Reservation.dart';
 import 'package:dentistReservationApp/models/data_tips_and_tricks.dart';
 import 'package:dentistReservationApp/routing/constanta.dart';
 import 'package:dentistReservationApp/screens/detail/detail_tips_screen.dart';
@@ -39,7 +37,6 @@ class _BodyHomeState extends State<BodyHome> {
       user = userData;
     });
   }
-
 
   // fungsi untuk mengirim pertanyaan
   void _sendQuestion() {
@@ -218,7 +215,7 @@ class _BodyHomeState extends State<BodyHome> {
           // item untuk menuju halaman buat reservasi
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, createReservation);
+              this.onTap(1);
             },
             child: Stack(
               // menggunakan stack untuk menimpa antar elemen
@@ -269,14 +266,19 @@ class _BodyHomeState extends State<BodyHome> {
                   right: 0.0,
                   top: 1.0,
                   bottom: 1.0,
-                  child: Container(
-                    width: getProportionateScreenWidth(44.0),
-                    height: getProportionateScreenWidth(44.0),
-                    decoration:
-                        BoxDecoration(color: kPrimary, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.add,
-                      color: kWhite,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, createReservation);
+                    },
+                    child: Container(
+                      width: getProportionateScreenWidth(44.0),
+                      height: getProportionateScreenWidth(44.0),
+                      decoration: BoxDecoration(
+                          color: kPrimary, shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.add,
+                        color: kWhite,
+                      ),
                     ),
                   ),
                 )
@@ -289,86 +291,7 @@ class _BodyHomeState extends State<BodyHome> {
           // item untuk membuat pertanyaan
           GestureDetector(
             onTap: () {
-              // menampilkan modal bottom sheet
-              showModalBottomSheet(
-                  // mengatifkan fungsi bottom sheet dapat digulirkan atau di scroll
-                  isScrollControlled: true,
-                  context: context,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(
-                              getProportionateScreenWidth(24.0)),
-                          topRight: Radius.circular(
-                              getProportionateScreenWidth(24.0)))),
-                  builder: (context) => SingleChildScrollView(
-                        child: Padding(
-                          padding:
-                              EdgeInsets.all(getProportionateScreenWidth(24.0)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context).asking,
-                                style: TextStyle(
-                                    color: kText1,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: getProportionateScreenWidth(24.0),
-                              ),
-                              // form untuk memasukan pertanyaan
-                              Form(
-                                  child: TextFormField(
-                                controller: _controllerQuestion,
-                                keyboardType: TextInputType.name,
-                                decoration: InputDecoration(
-                                  hintText:
-                                      AppLocalizations.of(context).askingHint,
-                                  filled: true,
-                                  fillColor: kBackgroundTextField,
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          getProportionateScreenWidth(24.0),
-                                      vertical:
-                                          getProportionateScreenWidth(16.0)),
-                                  border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          width: 0.0, style: BorderStyle.none),
-                                      borderRadius: BorderRadius.circular(
-                                          getProportionateScreenWidth(8.0))),
-                                ),
-                              )),
-                              SizedBox(
-                                height: getProportionateScreenWidth(36.0),
-                              ),
-                              // bottom untuk mengirimkan pertanyaan
-                              ConstrainedBox(
-                                constraints: BoxConstraints.tightFor(
-                                    width: double.infinity,
-                                    height: getProportionateScreenHeight(72.0)),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    this._sendQuestion();
-                                  },
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(kPrimary),
-                                      elevation: MaterialStateProperty.all(0)),
-                                  child: Text(
-                                    AppLocalizations.of(context).btnSend,
-                                    style: TextStyle(
-                                      color: kWhite,
-                                      fontSize: 22.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ));
+              this.onTap(2);
             },
             child: Stack(
               // menggunakan stack agar dapat menimpa antar elemen
@@ -419,14 +342,110 @@ class _BodyHomeState extends State<BodyHome> {
                   right: 0.0,
                   top: 1.0,
                   bottom: 1.0,
-                  child: Container(
-                    width: getProportionateScreenWidth(44.0),
-                    height: getProportionateScreenWidth(44.0),
-                    decoration:
-                        BoxDecoration(color: kPrimary, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.add,
-                      color: kWhite,
+                  child: GestureDetector(
+                    onTap: () {
+                      // menampilkan modal bottom sheet
+                      showModalBottomSheet(
+                          // mengatifkan fungsi bottom sheet dapat digulirkan atau di scroll
+                          isScrollControlled: true,
+                          context: context,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                      getProportionateScreenWidth(24.0)),
+                                  topRight: Radius.circular(
+                                      getProportionateScreenWidth(24.0)))),
+                          builder: (context) => SingleChildScrollView(
+                                child: Padding(
+                                  padding: EdgeInsets.all(
+                                      getProportionateScreenWidth(24.0)),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context).asking,
+                                        style: TextStyle(
+                                            color: kText1,
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            getProportionateScreenWidth(24.0),
+                                      ),
+                                      // form untuk memasukan pertanyaan
+                                      Form(
+                                          child: TextFormField(
+                                        controller: _controllerQuestion,
+                                        keyboardType: TextInputType.name,
+                                        decoration: InputDecoration(
+                                          hintText: AppLocalizations.of(context)
+                                              .askingHint,
+                                          filled: true,
+                                          fillColor: kBackgroundTextField,
+                                          contentPadding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  getProportionateScreenWidth(
+                                                      24.0),
+                                              vertical:
+                                                  getProportionateScreenWidth(
+                                                      16.0)),
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  width: 0.0,
+                                                  style: BorderStyle.none),
+                                              borderRadius: BorderRadius.circular(
+                                                  getProportionateScreenWidth(
+                                                      8.0))),
+                                        ),
+                                      )),
+                                      SizedBox(
+                                        height:
+                                            getProportionateScreenWidth(36.0),
+                                      ),
+                                      // bottom untuk mengirimkan pertanyaan
+                                      ConstrainedBox(
+                                        constraints: BoxConstraints.tightFor(
+                                            width: double.infinity,
+                                            height:
+                                                getProportionateScreenHeight(
+                                                    72.0)),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            this._sendQuestion();
+                                          },
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      kPrimary),
+                                              elevation:
+                                                  MaterialStateProperty.all(0)),
+                                          child: Text(
+                                            AppLocalizations.of(context)
+                                                .btnSend,
+                                            style: TextStyle(
+                                              color: kWhite,
+                                              fontSize: 22.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ));
+                    },
+                    child: Container(
+                      width: getProportionateScreenWidth(44.0),
+                      height: getProportionateScreenWidth(44.0),
+                      decoration: BoxDecoration(
+                          color: kPrimary, shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.add,
+                        color: kWhite,
+                      ),
                     ),
                   ),
                 )

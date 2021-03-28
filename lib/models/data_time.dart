@@ -6,20 +6,20 @@ class ChooseTime {
   final TimeOfDay datetime;
 
   ChooseTime({this.time, this.status, this.datetime});
+}
 
-  final startTime = TimeOfDay(hour: 8, minute: 0);
-  final endTime = TimeOfDay(hour: 17, minute: 0);
-  final step = Duration(minutes: 30);
+final startTime = TimeOfDay(hour: 8, minute: 0);
+final endTime = TimeOfDay(hour: 17, minute: 0);
+final step = Duration(minutes: 30);
 
-  Future<List<ChooseTime>> create() async {
-    List<ChooseTime> list = [];
-    var times = await getTimes(startTime, endTime, step).toList();
-    for (var v in times) {
-      list.add(new ChooseTime(
-          time: "${v.hour}:${v.minute}", status: false, datetime: v));
-    }
-    return list;
+Future<List<ChooseTime>> create() async {
+  List<ChooseTime> list = [];
+  var times = await getTimes(startTime, endTime, step).toList();
+  for (var v in times) {
+    list.add(new ChooseTime(
+        time: "${v.hour}:${v.minute}", status: false, datetime: v));
   }
+  return list;
 }
 
 Iterable<TimeOfDay> getTimes(
