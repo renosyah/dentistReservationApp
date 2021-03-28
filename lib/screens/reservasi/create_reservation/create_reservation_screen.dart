@@ -383,6 +383,9 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
         // maka _selectedDate diisi dengan nilai newSelectedDate
         _selectedDate = newSelectedDate;
 
+        // set selected time ke null
+        _selectedTime = null;
+
         // query data reservasi
         getReservationData();
 

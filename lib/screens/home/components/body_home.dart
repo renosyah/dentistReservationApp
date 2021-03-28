@@ -357,8 +357,12 @@ class _BodyHomeState extends State<BodyHome> {
                                       getProportionateScreenWidth(24.0)))),
                           builder: (context) => SingleChildScrollView(
                                 child: Padding(
-                                  padding: EdgeInsets.all(
-                                      getProportionateScreenWidth(24.0)),
+                                  padding: EdgeInsets.only(
+                                    top: getProportionateScreenWidth(24.0),
+                                    left: getProportionateScreenWidth(24.0),
+                                    right: getProportionateScreenWidth(24.0),
+                                    bottom: MediaQuery.of(context).viewInsets.bottom
+                                  ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -431,6 +435,10 @@ class _BodyHomeState extends State<BodyHome> {
                                             ),
                                           ),
                                         ),
+                                      ),
+                                      SizedBox(
+                                        height:
+                                        getProportionateScreenWidth(16.0),
                                       ),
                                     ],
                                   ),
