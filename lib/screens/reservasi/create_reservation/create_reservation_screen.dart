@@ -72,7 +72,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
         .get();
 
     if (query.docs.isNotEmpty) {
-      _showDialogFailedCreateReservation();
+      _showDialogFailedCreateReservation("${AppLocalizations.of(context).failedCreateReservationText} ${reservationTime.toString()}");
       return;
     }
 
@@ -101,13 +101,12 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
           .set(new Counter(counterId: counter + 1).toJson());
     }
 
-    Navigator.pop(
-        context); // ketika diklik akan menutup halaman serta menampilkan snakbar pada halaman beranda
+    Navigator.pop(context); // ketika diklik akan menutup halaman serta menampilkan snakbar pada halaman beranda
   }
 
   // fungsi untuk menampilkan dialog
   // gagal reservasi
-  Future<void> _showDialogFailedCreateReservation() async {
+  Future<void> _showDialogFailedCreateReservation(String text) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -117,8 +116,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(
-                    "Reservasi berhasil dibuat, Silahkan periksa halaman Reservasi"),
+                Text(text),
               ],
             ),
           ),
@@ -237,6 +235,13 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
                             slot[i].status = false;
                             continue;
                           }
+
+                          // check jika waktu jika weekend
+                          if (_selectedDate.weekday == DateTime.sunday || _selectedDate.weekday == DateTime.saturday){
+                            slot[i].status = false;
+                            continue;
+                          }
+
                           // check setiap reservasi
                           for (var doc in snapshot.data.docs){
                               Reservation r = Reservation.fromJson(doc.data());
