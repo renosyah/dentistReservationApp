@@ -368,7 +368,8 @@ class _BodyHomeState extends State<BodyHome> {
                             ],
                           ),
                         ),
-                      ));
+                      )
+              );
             },
             child: Stack(
               // menggunakan stack agar dapat menimpa antar elemen

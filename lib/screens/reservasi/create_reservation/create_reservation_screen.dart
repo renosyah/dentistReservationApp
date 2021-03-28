@@ -41,7 +41,16 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
   void getReservationData() {
 
     // jika tanggal belum dipilih maka stop!
-    if (_selectedDate == null) return;
+    if (_selectedDate == null) {
+
+      // query reservasi
+      _reservation = FirebaseFirestore.instance
+          .collection("reservation")
+          .orderBy('time', descending: false)
+          .limit(0)
+          .snapshots();
+      return;
+    }
 
     // query reservasi
     _reservation = FirebaseFirestore.instance
@@ -207,7 +216,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
                 ),
                 Text(
                   // menampilan text pilih waktu
-                  _selectedDate == null ? '' : AppLocalizations.of(context).chooseTime,
+                  AppLocalizations.of(context).chooseTime,
                   // memberi style warna dan ukuran pada text
                   style: TextStyle(color: kText2, fontSize: 14.0),
                 ),
@@ -219,7 +228,6 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
                 StreamBuilder<QuerySnapshot>(
                     stream: _reservation,
                     builder: (context,snapshot){
-                      if (snapshot.hasData){
 
                         // deklarasi array
                         var slot = new ChooseTime().create();
@@ -231,26 +239,29 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
                           var t = slot[i];
 
                           // check jika waktu telah lewat
-                          if (now.difference(DateTime(_selectedDate.year ,_selectedDate.month,_selectedDate.day, t.datetime.hour, t.datetime.minute)).inMinutes > 0){
+                          if (_selectedDate != null && (now.difference(DateTime(_selectedDate.year ,_selectedDate.month,_selectedDate.day, t.datetime.hour, t.datetime.minute)).inMinutes > 0)){
                             slot[i].status = false;
                             continue;
                           }
 
                           // check jika waktu jika weekend
-                          if (_selectedDate.weekday == DateTime.sunday || _selectedDate.weekday == DateTime.saturday){
+                          if (_selectedDate != null && (_selectedDate.weekday == DateTime.sunday || _selectedDate.weekday == DateTime.saturday)){
                             slot[i].status = false;
                             continue;
                           }
 
-                          // check setiap reservasi
-                          for (var doc in snapshot.data.docs){
-                              Reservation r = Reservation.fromJson(doc.data());
+                          if (snapshot.hasData){
+                            // check setiap reservasi
+                            for (var doc in snapshot.data.docs){
+                                Reservation r = Reservation.fromJson(doc.data());
 
-                              // jika telah di ambil, set nilai ke false
-                              if (r.time.difference(DateTime(r.time.year ,r.time.month,r.time.day, t.datetime.hour, t.datetime.minute)).inMinutes == 0){
-                                slot[i].status = false;
-                              }
+                                // jika telah di ambil, set nilai ke false
+                                if (r.time.difference(DateTime(r.time.year ,r.time.month,r.time.day, t.datetime.hour, t.datetime.minute)).inMinutes == 0){
+                                  slot[i].status = false;
+                                }
+                            }
                           }
+
                           if (!slot[i].status) {
                             continue;
                           }
@@ -275,7 +286,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
                                     width: getProportionateScreenWidth(116.0),
                                     height: getProportionateScreenHeight(56.0),
                                     decoration: BoxDecoration(
-                                        color: slot[index].status && _selectedTime == slot[index].datetime ? kPrimary  : !slot[index].status ? kBackgroundTextField : kWhite,
+                                        color: slot[index].status && _selectedTime == slot[index].datetime ? kPrimary  : !slot[index].status ? Colors.red : kWhite,
                                         borderRadius: BorderRadius.circular(
                                             getProportionateScreenWidth(8.0)),
                                         boxShadow: <BoxShadow>[
@@ -297,8 +308,6 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
                                 ))
                           ],
                         );
-                      }
-                      return Center();
                     }
                 ),
                 // membuat jarak antar elemen menggunakan sizebox

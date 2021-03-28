@@ -8,7 +8,7 @@ class ChooseTime {
   ChooseTime({this.time, this.status, this.datetime});
 
   final startTime = TimeOfDay(hour: 8, minute: 0);
-  final endTime = TimeOfDay(hour: 17, minute: 0);
+  final endTime = TimeOfDay(hour: 16, minute: 30);
   final step = Duration(minutes: 30);
 
   List<ChooseTime> create()  {
