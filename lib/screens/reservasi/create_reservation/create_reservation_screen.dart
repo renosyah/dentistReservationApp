@@ -21,6 +21,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
   // inisialisasi type data datetime
   DateTime _selectedDate;
   TimeOfDay _selectedTime;
+  int _counter = 1;
 
   // inisialisasi controller tanggal
   TextEditingController _textDateController = TextEditingController();
@@ -93,20 +94,20 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
         await FirebaseFirestore.instance.collection("counter").limit(1).get();
 
     if (query.docs.isNotEmpty && query.docs[0] != null) {
-      int counter = query.docs[0].data()['counter_id'];
+      // int counter = query.docs[0].data()['counter_id'];
 
       FirebaseFirestore.instance.collection("reservation").doc().set(
           new Reservation(
                   userId: user.uid,
-                  queueNumber: counter,
+                  queueNumber: _counter,
                   name: user.displayName,
                   time: reservationTime)
               .toJson());
 
-      FirebaseFirestore.instance
-          .collection("counter")
-          .doc(query.docs[0].id)
-          .set(new Counter(counterId: counter + 1).toJson());
+      // FirebaseFirestore.instance
+      //     .collection("counter")
+      //     .doc(query.docs[0].id)
+      //     .set(new Counter(counterId: counter + 1).toJson());
     }
 
     Navigator.pop(context); // ketika diklik akan menutup halaman serta menampilkan snakbar pada halaman beranda
@@ -249,7 +250,9 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
                             continue;
                           }
 
+                          _counter = 1;
                           if (snapshot.hasData){
+
                             // check setiap reservasi
                             for (var doc in snapshot.data.docs){
                                 Reservation r = Reservation.fromJson(doc.data());
@@ -258,6 +261,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
                                 if (r.time.difference(DateTime(r.time.year ,r.time.month,r.time.day, t.datetime.hour, t.datetime.minute)).inMinutes == 0){
                                   slot[i].status = false;
                                 }
+                                _counter++;
                             }
                           }
 
